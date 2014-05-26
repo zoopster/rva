@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript" language="javascript"
+	src="http://ig.gmodules.com/gadgets/js/rpc.js"></script>
+<script type="text/javascript">
+	// 		var callbackFunction;
+
+	function getGadgetUrl() {
+		var url = "http://www.risedisplay.com/gadgets/teachingwall/finance/table/rv-table.xml";
+		return "&url=" + url;
+	}
+	// 	    function callSave(params) {
+	//   	  	    try {
+	//   	  		  parent.rdn2_rpc_customUI_save(params);
+	//   	  	    }
+	//   	  	    catch(err){}	  		
+	// 		}
+	//   		function callCancel() {
+	//   	  	    try {
+	//   	  		  parent.rdn2_rpc_customUI_cancel();
+	//   	  	    }
+	//   	  	    catch(err){}	  		
+	// 		}
+	//   		function updateGadgets(params) {
+	//   	  		if (params === null) {
+	//   	  	  		callCancel();
+	//   	  		} else {
+	//   	  	  		callSave(params);
+	//   	  		}
+	//   	  	}
+	function loadEditor(params) {
+
+		var gadgetUrl = "http://rvagadgets.appspot.com/?view=editor";
+		var commonParams = "&up_id=test1&up_rsA=mc&up_rsS=90&up_rsH=500&up_rsW=500";
+		var editorPosition = "&w=600&h=400&l=0&t=0&pid=divEditor";
+
+		if (params !== null) {
+			var head = document.getElementsByTagName('head')[0];
+			var scriptE = document.createElement('script');
+			scriptE.type = 'text/javascript';
+			scriptE.src = gadgetUrl + params + editorPosition + commonParams;
+			head.appendChild(scriptE);
+		}
+	}
+	function getSettings(callback) {
+		//   			callbackFunction = callback;
+		try {
+			gadgets.rpc.call("if_divEditor", "rscmd_getSettings", callback);
+		} catch (err) {
+		}
+	}
+
+	//   		function getSettingsCallback(params) {
+	//   			if (typeof callbackFunction == "function")
+	// 	  			callbackFunction(params);
+	//   		}
+
+	//   	    gadgets.rpc.register("rsevent_config", updateGadgets);
+</script>
+</head>
+<body>
+	<div id="divEditor" name="divEditor"
+		style="width: 600px; height: 400px;"></div>
+	<script>
+		//loadEditor("&url=http://risegadgets.googlecode.com/svn/trunk/interactiveFlash/rv-flash2.xml");
+		loadEditor(getGadgetUrl());
+	</script>
+</body>
+</html>

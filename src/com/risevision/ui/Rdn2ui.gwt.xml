@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.1//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.1/distro-source/core/src/gwt-module.dtd">
+<module rename-to='rdn2ui'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='com.risevision.common.GwtCommon'/>
+  <inherits name='com.risevision.core.GwtCore'/>
+  <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
+  
+  <!-- Inherit the default GWT style sheet.  You can change       -->
+  <!-- the theme of your GWT application by uncommenting          -->
+  <!-- any one of the following lines.                            -->
+  <!--<inherits name='com.google.gwt.user.theme.standard.Standard'/>-->
+  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+<!--   <inherits name='com.risevision.gaerequest.GaeRequest'/> -->
+
+  <!-- Other module inherits                                      -->
+  <stylesheet src="rdnstandard/rdnstandard.css"/>
+  <script src="js/jscolor/jscolor.js"/> 
+  
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='com.risevision.ui.client.UiEntryPoint'/>
+  
+    <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  
+</module>

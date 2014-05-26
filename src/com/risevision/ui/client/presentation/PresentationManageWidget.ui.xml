@@ -1,0 +1,57 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:r="urn:import:com.risevision.ui.client.common.widgets"
+	xmlns:p="urn:import:com.risevision.ui.client.presentation" xmlns:c="urn:import:com.risevision.ui.client.presentation.common">
+	
+
+	<g:HTMLPanel>
+		<table cellSpacing="0" cellPadding="0" style="width: 100%">
+			<tr>
+				<td align="left" style="vertical-align:bottom; ">
+					<table cellSpacing="0" cellPadding="0">
+						<tr>
+							<td>
+								<g:TabBar ui:field="contentBar"></g:TabBar>
+							</td>
+						</tr>
+					</table>
+				</td>			
+				<td style="width:100%; vertical-align:bottom;">
+					<table cellSpacing="0" cellPadding="0">
+						<tr>
+							<td>
+								<g:Label ui:field="nameLabel"></g:Label>
+							</td>
+<!-- 							<td> -->
+<!-- 								<r:SpacerWidget></r:SpacerWidget> -->
+<!-- 							</td> -->
+<!-- 							<td> -->
+<!-- 								<g:HorizontalPanel ui:field="buttonsPanel"></g:HorizontalPanel> -->
+<!-- 							</td> -->
+						</tr>
+						<tr>
+							<td style="padding-top: 5px;"></td>
+						</tr>
+					</table>
+				</td>
+				<td align="right">
+					<table cellSpacing="0" cellPadding="0">
+						<tr>
+							<td>
+								<r:ActionsWidget ui:field="actionsWidget"></r:ActionsWidget>
+							</td>
+						</tr>
+					</table>
+				</td>	
+			</tr>
+			<tr>
+				<td colspan="3">
+					<g:DeckPanel ui:field="contentPanel">
+						<p:PresentationLayoutWidget ui:field="layoutWidget"></p:PresentationLayoutWidget>
+						<c:HtmlEditorWidget ui:field="htmlArea"></c:HtmlEditorWidget>
+					</g:DeckPanel>
+				</td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder> 

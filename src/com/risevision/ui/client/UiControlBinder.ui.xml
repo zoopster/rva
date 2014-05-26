@@ -1,0 +1,114 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:r="urn:import:com.risevision.ui.client.common.widgets"
+	xmlns:p="urn:import:com.risevision.ui.client">
+
+	<g:HTMLPanel>
+		<table cellspacing="0" cellpadding="0" style="width:100%; height:100%">
+			<tr>
+				<td>
+					<div class="div-block">
+						<table cellspacing="0" cellpadding="0" style="width:100%; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px;">
+							<tr>
+								<td><g:SimplePanel ui:field="mainMenu"></g:SimplePanel></td>
+								<td align="right"><g:SimplePanel ui:field="accountContainer"></g:SimplePanel>			
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="div-block">
+						<table ui:field="topTable" cellspacing="0" cellpadding="0" style="width:100%; padding-left: 12px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;">
+							<tr>
+								<td ui:field="logoContainer" style="width: 234px;"></td>
+								<td ui:field="bannerContainer" style="width: 468px;"></td>
+								<td align="right" style="vertical-align: top;">
+									<table cellspacing="0" cellpadding="0" style="width: 100%; padding: 4px;">
+										<tr>
+											<td align="right" style="padding-bottom: 4px;">
+												<g:SimplePanel ui:field="companySelectorContainer"></g:SimplePanel>
+											</td>
+										</tr>
+										<tr>
+											<td align="right">
+												<g:SimplePanel ui:field="linksContainer"></g:SimplePanel>
+											</td>
+										</tr>
+			<!--							<tr>-->
+			<!--								<td align="right" style="padding-top: 4px;"><span class="rdn-Head" style="color:gray;">BETA Release</span>-->
+			<!--								</td>-->
+			<!--							</tr>-->
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<table cellspacing="0" cellpadding="0" style="width:100%; padding-left: 12px; padding-right: 12px;">
+							<tr>
+			<!--					<td align="right"><g:SimplePanel ui:field="actionContainer"></g:SimplePanel></td>-->
+								<td ui:field="titleContainer"></td>
+								<td ui:field="lastModifiedContainer" align="right" style="width:100%"></td>
+			<!--					<td><span class="rdn-Separator"> </span></td>-->
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<table cellspacing="0" cellpadding="0" style="width:100%; padding-left: 12px; padding-right: 12px;">
+							<tr>
+								<td style="width:200px"></td>
+								<td ui:field="statusContainer" align="center"></td>
+								<td style="width:200px"></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td style="height: 100%">
+					<div class="div-block" style="height: 100%; padding-left: 12px; padding-right: 12px; padding-bottom: 12px; padding-top: 8px;">
+						<table cellspacing="0" cellpadding="0" style="height: 100%;">
+							<tr>
+								<td>
+									<g:DeckPanel ui:field="contentDeckPanel">
+										<g:Frame ui:field="startFrame"></g:Frame>
+										<g:SimplePanel ui:field="contentContainer"></g:SimplePanel>
+									</g:DeckPanel>
+								</td>
+								<td><span class="rdn-Separator"> </span></td>
+								<td style="vertical-align:top;"><g:SimplePanel ui:field="actionContainer"></g:SimplePanel></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<table cellspacing="0" cellpadding="0" style="width:100%; padding-left: 12px; padding-right: 12px;">
+							<tr>
+								<td align="left" valign="top" ui:field="termsContainer"></td>
+								<td width="70%" align="middle" valign="top">Platform by <a href="http://www.risevision.com" target="_blank" tabIndex="-1">Rise Vision</a>
+								</td>
+								<td align="right">
+								<img src="http://code.google.com/appengine/images/appengine-noborder-120x30.gif" alt="Powered by Google App Engine" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder> 

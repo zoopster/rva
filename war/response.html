@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Auth response</title>
+    
+	<script type="text/javascript">
+    var d = window.opener || window.parent;
+    if (d) {
+       	d.parent._setFoursquareToken(window.location.hash);
+ 
+	    if (window.opener) {
+	        window.close();
+	        if (window.self) {
+	            window.self.close();
+	        }
+	    }
+    }
+	</script>
+  </head>
+ 
+  <body style="height: 100%; margin: 0; overflow: hidden;">
+  	<div id="progress" class="div-block" style="position:absolute; top:0px; left:0px; z-index:2"><img src="../images/progressbar.gif" /></div>
+	<div id="main" style="position:absolute; top:0px; left:0px;">
+
+	</div>
+
+</body>
+</html>

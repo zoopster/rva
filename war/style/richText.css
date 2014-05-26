@@ -1,0 +1,30 @@
+.ContentBordered {
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+	text-align: left;
+	background-color: transparent;
+}
+
+.ContentBordered form {
+	background-color: #efefef;
+	border: 1px dashed #555555;
+}
+
+/* CSS class for A name */
+.ContentBordered table {
+	BORDER-RIGHT: #999999 1px dashed;
+	BORDER-BOTTOM: #999999 1px dashed;
+}
+
+.ContentBordered table td {
+	PADDING: 1px;
+	BORDER-TOP: #999999 1px dashed;
+	BORDER-LEFT: #999999 1px dashed;
+}
+
+.ContentBordered table th {
+	PADDING: 1px;
+	BORDER-TOP: #000000 1px dashed;
+	BORDER-LEFT: #000000 1px dashed;
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:r="urn:import:com.risevision.ui.client.common.widgets" 
+	xmlns:d="urn:import:com.google.gwt.user.datepicker.client">
+
+	<ui:style>
+		.tdlb {
+			width: 80px;
+		}
+		.tdlbx2 {
+			width: 160px;
+		}
+		.tdsm {
+			width: 100px;
+			padding-right: 20px;
+		}
+		.tdwd {
+			padding-right: 10px;
+		}
+		.tz {
+			width: 300px;
+		}
+		.wsm {
+			width: 70px;
+		}
+		.w100 {
+			width: 100%;
+		}
+	</ui:style>
+
+	<g:HTMLPanel>
+		<table cellSpacing="0" cellPadding="0" class="rdn-Table">
+			<tr>
+				<td>
+					<div class="rdn-Head">Timeline</div>
+					<r:FormValidatorWidget ui:field="requiredValidator"></r:FormValidatorWidget>
+					<r:FormValidatorWidget ui:field="valueValidator"></r:FormValidatorWidget>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table cellSpacing="0" cellPadding="0">
+						<tr>
+							<td class="{style.tdlbx2}">
+								<g:CheckBox ui:field="cbNoEndDate" styleName="rdn-CheckBox">No End Date</g:CheckBox>
+							</td>
+							<td class="{style.tdlb}">Start Date:</td>
+							<td class="{style.tdsm}">
+							    <d:DateBox ui:field="tbStartDate" styleName="rdn-TextBox {style.w100}"></d:DateBox>
+							</td>
+							<td class="{style.tdlb}">
+								<r:LabelEnableWidget ui:field="lbEndDate">End Date:</r:LabelEnableWidget>
+							</td>
+							<td class="{style.tdsm}">
+								<d:DateBox ui:field="tbEndDate" styleName="rdn-TextBox {style.w100}"></d:DateBox>
+							</td>
+						</tr>
+						<tr>
+							<td class="{style.tdlbx2}">
+								<g:CheckBox ui:field="cbAllDay" styleName="rdn-CheckBox">All Day</g:CheckBox>
+							</td>
+							<td class="{style.tdlb}">
+								<r:LabelEnableWidget ui:field="lbStartTime">Start Time:</r:LabelEnableWidget>
+							</td>
+							<td class="{style.tdsm}">
+								<r:TimeListBoxWidget ui:field="tbStartTime" styleName="rdn-ListBox {style.w100}"></r:TimeListBoxWidget>
+							</td>
+							<td class="{style.tdlb}">
+								<r:LabelEnableWidget ui:field="lbEndTime">End Time:</r:LabelEnableWidget>
+							</td>
+							<td class="{style.tdsm}">
+								<r:TimeListBoxWidget ui:field="tbEndTime" styleName="rdn-ListBox {style.w100}"></r:TimeListBoxWidget>
+							</td>
+						</tr>
+						<tr style="display:none">
+							<td class="{style.tdlbx2}">
+								<g:CheckBox ui:field="cbUseDisplayTime" styleName="rdn-CheckBox">Use Display Time</g:CheckBox>
+							</td>
+							<td class="{style.tdlb}">
+								<r:LabelEnableWidget ui:field="lbTimeZone">Time Zone:</r:LabelEnableWidget>
+							</td>
+							<td colspan="3">
+								<r:TimeZoneWidget ui:field="lsbTimeZone" styleName="rdn-ListBox {style.tz}"></r:TimeZoneWidget>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<hr />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table cellSpacing="0" cellPadding="0">
+						<tr>
+							<td class="{style.tdlb}" valign="top">Recurrence:</td>
+							<td>
+								<table cellSpacing="0" cellPadding="0">
+									<tr>
+										<td class="{style.tdlb}">
+											<g:RadioButton ui:field="rbDaily" name="recurrence">Daily</g:RadioButton>
+										</td>
+									</tr>
+									<tr>
+										<td class="{style.tdlb}">
+											<g:RadioButton ui:field="rbWeekly" name="recurrence">Weekly</g:RadioButton>
+										</td>
+									</tr>
+									<tr>
+										<td class="{style.tdlb}">
+											<g:RadioButton ui:field="rbMonthly" name="recurrence">Monthly</g:RadioButton>
+										</td>
+									</tr>
+									<tr>
+										<td class="{style.tdlb}">
+											<g:RadioButton ui:field="rbYearly" name="recurrence">Yearly</g:RadioButton>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td valign="top">
+								<g:DeckPanel ui:field="pnlRecurrence">
+									<g:HTMLPanel>
+										Every&nbsp;&nbsp;
+										<r:NumericBoxWidget ui:field="tbDailyRecurrenceFrequency" styleName="rdn-TextBox {style.wsm}" maxLength="6">1</r:NumericBoxWidget>
+										&nbsp;&nbsp;Day(s)
+									</g:HTMLPanel>
+									<g:HTMLPanel>
+										<table cellSpacing="0" cellPadding="0">
+											<tr>
+												<td colspan="4">
+													Every&nbsp;&nbsp;
+													<r:NumericBoxWidget ui:field="tbWeeklyRecurrenceFrequency" styleName="rdn-TextBox {style.wsm}" maxLength="6">1</r:NumericBoxWidget>
+													&nbsp;&nbsp;Week(s)
+												</td>
+											</tr>
+											<tr>
+												<td class="{style.tdwd}">
+													<g:CheckBox ui:field="cbSunday" styleName="rdn-CheckBox">Sunday</g:CheckBox>
+												</td>
+												<td class="{style.tdwd}">
+													<g:CheckBox ui:field="cbMonday" styleName="rdn-CheckBox">Monday</g:CheckBox>
+												</td>
+												<td class="{style.tdwd}">
+													<g:CheckBox ui:field="cbTuesday" styleName="rdn-CheckBox">Tuesday</g:CheckBox>
+												</td>
+												<td>
+													<g:CheckBox ui:field="cbWednesday" styleName="rdn-CheckBox">Wednesday</g:CheckBox>
+												</td>
+											</tr>
+											<tr>
+												<td class="{style.tdwd}">
+													<g:CheckBox ui:field="cbThursday" styleName="rdn-CheckBox">Thursday</g:CheckBox>
+												</td>
+												<td class="{style.tdwd}">
+													<g:CheckBox ui:field="cbFriday" styleName="rdn-CheckBox">Friday</g:CheckBox>
+												</td>
+												<td class="{style.tdwd}">
+													<g:CheckBox ui:field="cbSaturday" styleName="rdn-CheckBox">Saturday</g:CheckBox>
+												</td>
+												<td>
+												</td>
+											</tr>
+										</table>
+									</g:HTMLPanel>
+									<g:HTMLPanel>
+										<table cellSpacing="0" cellPadding="0" class="rdn-Table">
+											<tr>
+												<td>
+													<g:RadioButton ui:field="rbMonthlyRecurrenceAbsolute" name="monthly">Day</g:RadioButton>
+												</td>
+												<td>
+													&nbsp;&nbsp;
+													<r:NumericBoxWidget ui:field="tbMonthlyRecurrenceDayOfMonth" styleName="rdn-TextBox {style.wsm}" maxLength="6">1</r:NumericBoxWidget>
+													&nbsp;&nbsp;
+													<r:LabelEnableWidget ui:field="lbMonthlyRecurrenceAbsolute1">of Every</r:LabelEnableWidget>&nbsp;&nbsp;
+													<r:NumericBoxWidget ui:field="tbMonthlyRecurrenceFrequency" styleName="rdn-TextBox {style.wsm}" maxLength="6">1</r:NumericBoxWidget>
+													&nbsp;&nbsp;
+													<r:LabelEnableWidget ui:field="lbMonthlyRecurrenceAbsolute2">Month(s)</r:LabelEnableWidget>&nbsp;&nbsp;
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<g:RadioButton ui:field="rbMonthlyRecurrenceRelative" name="monthly">The</g:RadioButton>
+												</td>
+												<td>
+													&nbsp;&nbsp;
+													<r:RiseListBox ui:field="lsbMonthlyRecurrenceWeekOfMonth" styleName="rdn-ListBox {style.wsm}"></r:RiseListBox>
+													&nbsp;&nbsp;
+													<r:RiseListBox ui:field="lsbMonthlyRecurrenceDayOfWeek" styleName="rdn-ListBox {style.wsm}"></r:RiseListBox>
+													&nbsp;&nbsp;
+													<r:LabelEnableWidget ui:field="lbMonthlyRecurrenceRelative1">of Every</r:LabelEnableWidget>&nbsp;&nbsp;
+													<r:NumericBoxWidget ui:field="tbMonthlyRecurrenceRelativeFrequency" styleName="rdn-TextBox {style.wsm}" maxLength="6">1</r:NumericBoxWidget>
+													&nbsp;&nbsp;
+													<r:LabelEnableWidget ui:field="lbMonthlyRecurrenceRelative2">Month(s)</r:LabelEnableWidget>&nbsp;&nbsp;
+												</td>
+											</tr>
+										</table>
+									</g:HTMLPanel>
+									<g:HTMLPanel>
+										<table cellSpacing="0" cellPadding="0" class="rdn-Table">
+											<tr>
+												<td>
+													<g:RadioButton ui:field="rbYearlyRecurrenceAbsolute" name="yearly">Every</g:RadioButton>
+												</td>
+												<td>
+													&nbsp;&nbsp;
+													<r:RiseListBox ui:field="lsbYearlyRecurrenceMonthOfYear" styleName="rdn-ListBox {style.wsm}"></r:RiseListBox>
+													&nbsp;&nbsp;
+													<r:NumericBoxWidget ui:field="tbYearlyRecurrenceDayOfMonth" styleName="rdn-TextBox {style.wsm}" maxLength="6">1</r:NumericBoxWidget>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<g:RadioButton ui:field="rbYearlyRecurrenceRelative" name="yearly">The</g:RadioButton>
+												</td>
+												<td>
+													&nbsp;&nbsp;
+													<r:RiseListBox ui:field="lsbYearlyRecurrenceWeekOfMonth" styleName="rdn-ListBox {style.wsm}"></r:RiseListBox>
+													&nbsp;&nbsp;
+													<r:RiseListBox ui:field="lsbYearlyRecurrenceDayOfWeek" styleName="rdn-ListBox {style.wsm}"></r:RiseListBox>
+													&nbsp;&nbsp;
+													<r:LabelEnableWidget ui:field="lbYearlyRecurrenceRelative1">of</r:LabelEnableWidget>&nbsp;&nbsp;
+													<r:RiseListBox ui:field="lsbYearlyRecurrenceRelativeMonthOfYear" styleName="rdn-ListBox {style.wsm}"></r:RiseListBox>
+												</td>
+											</tr>
+										</table>
+									</g:HTMLPanel>
+								</g:DeckPanel>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<r:ActionsWidget ui:field="wgActions"></r:ActionsWidget>
+	</g:HTMLPanel>
+</ui:UiBinder> 

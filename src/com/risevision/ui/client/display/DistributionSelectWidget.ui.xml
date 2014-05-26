@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:r="urn:import:com.risevision.ui.client.common.widgets"
+	xmlns:w="urn:import:com.risevision.ui.client.common.widgets.grid">
+	<g:HTMLPanel>
+		<table cellSpacing="0" cellPadding="0">
+			<tr>
+				<td>
+					<div class="rdn-Head">Distribution</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<r:StatusBoxWidget ui:field="statusBox"></r:StatusBoxWidget>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="width: 580px; overflow:auto;">
+						<w:ScrollingGridWidget ui:field="gr" width="100%"></w:ScrollingGridWidget>
+					</div>
+					<r:ActionsWidget ui:field="wgActions"></r:ActionsWidget>
+				</td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder> 

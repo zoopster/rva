@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>CompanyServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.CompanyServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CompanyServlet</servlet-name>
+		<url-pattern>/rdn2ui/company</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.UserServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/rdn2ui/user</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ScheduleServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.ScheduleServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ScheduleServlet</servlet-name>
+		<url-pattern>/rdn2ui/schedule</url-pattern>
+	</servlet-mapping>
+
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>PlaylistServlet</servlet-name> -->
+<!-- 		<servlet-class>com.risevision.ui.server.rpc.PlaylistServiceImpl</servlet-class> -->
+<!-- 	</servlet> -->
+
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>PlaylistServlet</servlet-name> -->
+<!-- 		<url-pattern>/rdn2ui/playlist</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+	<servlet>
+		<servlet-name>GadgetServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.GadgetServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GadgetServlet</servlet-name>
+		<url-pattern>/rdn2ui/gadget</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PresentationServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.PresentationServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>PresentationServlet</servlet-name>
+		<url-pattern>/rdn2ui/presentation</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DisplayServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.DisplayServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DisplayServlet</servlet-name>
+		<url-pattern>/rdn2ui/display</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SocialConnectorServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.SocialConnectorServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SocialConnectorServlet</servlet-name>
+		<url-pattern>/rdn2ui/socialConnector</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MediaLibraryServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.MediaLibraryServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MediaLibraryServlet</servlet-name>
+		<url-pattern>/rdn2ui/mediaLibrary</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LoginHelperServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.rpc.LoginServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LoginHelperServlet</servlet-name>
+		<url-pattern>/rdn2ui/loginHelper</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UserRequestTokenServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.oauth.UserRequestTokenServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserRequestTokenServlet</servlet-name>
+		<url-pattern>/user/request</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UserAccessTokenServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.oauth.UserAccessTokenServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserAccessTokenServlet</servlet-name>
+		<url-pattern>/user/access</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FoursquareAuthenticateServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.oauth.FoursquareAuthServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FoursquareAuthenticateServlet</servlet-name>
+		<url-pattern>/foursquare/auth</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>TwitterRequestTokenServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.oauth.TwitterRequestTokenServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TwitterRequestTokenServlet</servlet-name>
+		<url-pattern>/twitter/request</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TwitterAccessTokenServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.oauth.TwitterAccessTokenServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TwitterAccessTokenServlet</servlet-name>
+		<url-pattern>/twitter/access</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AmzUploadCompleteServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.amazonImpl.UploadCompleteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AmzUploadCompleteServlet</servlet-name>
+		<url-pattern>/mediaLibrary/uploadComplete</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MakeRequest</servlet-name>
+		<servlet-class>com.risevision.ui.server.utils.MakeRequestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MakeRequest</servlet-name>
+		<url-pattern>/gadgets/makeRequest</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MemCacheClearServlet</servlet-name>
+		<servlet-class>com.risevision.ui.server.utils.MemCacheClearServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemCacheClearServlet</servlet-name>
+		<url-pattern>/cache/clear</url-pattern>
+	</servlet-mapping>
+
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>logout</servlet-name> -->
+<!-- 		<jsp-file>/logout.jsp</jsp-file> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>logout</servlet-name> -->
+<!-- 		<url-pattern>/logout/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+	<filter>
+		<filter-name>GaeAuthFilter</filter-name>
+		<filter-class>com.risevision.gaerequest.server.GaeAuthFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>GaeAuthFilter</filter-name>
+		<url-pattern>/rdn2ui/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Rdn2ui.html</welcome-file>
+	</welcome-file-list>
+	
+	<!-- Require login. We only require login for the Rdn2ui.html page 
+	(instead of *.html) because we do not want to require login for the compiled 
+	GWT javascript files, which also end in .html. -->
+<!-- 	<security-constraint> -->
+<!-- 		<display-name>Redirect to the login page if needed before showing the -->
+<!-- 			host html page. -->
+<!-- 		</display-name> -->
+<!-- 		<web-resource-collection> -->
+<!-- 			<web-resource-name>Login required</web-resource-name> -->
+<!-- 			<url-pattern>/Rdn2ui.html</url-pattern> -->
+<!-- 		</web-resource-collection> -->
+<!-- 		<auth-constraint> -->
+<!-- 			<role-name>*</role-name> -->
+<!-- 		</auth-constraint> -->
+<!-- 	</security-constraint> -->
+
+<!-- 	<security-constraint> -->
+<!-- 		<web-resource-collection> -->
+<!-- 			<url-pattern>/logout/</url-pattern> -->
+<!-- 		</web-resource-collection> -->
+<!-- 	</security-constraint> -->
+
+<!-- 	<security-constraint> -->
+<!-- 		<web-resource-collection> -->
+<!-- 			<url-pattern>/*</url-pattern> -->
+<!-- 		</web-resource-collection> -->
+<!-- 		<auth-constraint> -->
+<!-- 			<role-name>*</role-name> -->
+<!-- 		</auth-constraint> -->
+<!-- 	</security-constraint> -->
+		
+<!-- 	<security-constraint>	 -->
+<!-- 		<user-data-constraint> -->
+<!-- 		<transport-guarantee>CONFIDENTIAL</transport-guarantee> -->
+<!-- 		</user-data-constraint> -->
+<!-- 	</security-constraint> -->
+
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/cache/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<precompilation-enabled>true</precompilation-enabled>
+</web-app>
