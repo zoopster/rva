@@ -1,3 +1,7 @@
+// Copyright © 2010 - May 2014 Rise Vision Incorporated.
+// Use of this software is governed by the GPLv3 license
+// (reproduced in the LICENSE file).
+
 function createURL(accessor, action, method, tqx, tq, oauth_consumer_key, oauth_token) {
 	
 	var message = { 
