@@ -185,8 +185,8 @@ package com.risevision.ui.client.common.widgets.colorPicker;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 /**
  * A helpful class to set transparencies in browsers GWT supports
  * @author AurorisNET
@@ -214,7 +214,7 @@ public class TransparencyImpl
     {
         try
         {
-            DOM.setStyleAttribute(elem, "backgroundColor", color);
+            elem.getStyle().setProperty("backgroundColor", color);
         }
         catch (com.google.gwt.core.client.JavaScriptException e)
         {
@@ -241,25 +241,25 @@ public class TransparencyImpl
             {
                 if (alpha == 100)
                 {
-                    DOM.setStyleAttribute(elem, "filter", map.get(elem) + "");
+                    elem.getStyle().setProperty("filter", map.get(elem) + "");
                 }
                 else
                 {
-                    DOM.setStyleAttribute(elem, "filter", map.get(elem) +
+                    elem.getStyle().setProperty("filter", map.get(elem) +
                         ", progid:DXImageTransform.Microsoft.Alpha(opacity=" + alpha + ");");
                 }
             }
             else
             {
-                map.put(elem, DOM.getStyleAttribute(elem, "filter"));
+                map.put(elem, elem.getStyle().getProperty("filter"));
 
                 if (alpha == 100)
                 {
-                    DOM.setStyleAttribute(elem, "filter", map.get(elem) + "");
+                    elem.getStyle().setProperty("filter", map.get(elem) + "");
                 }
                 else
                 {
-                    DOM.setStyleAttribute(elem, "filter", map.get(elem) +
+                    elem.getStyle().setProperty("filter", map.get(elem) +
                         ", progid:DXImageTransform.Microsoft.Alpha(opacity=" + alpha + ");");
                 }
             }
@@ -267,13 +267,13 @@ public class TransparencyImpl
         // If IE 7 (or better)
         else if (ieVersion >= 7.0)
         {
-            DOM.setStyleAttribute(elem, "filter", "alpha(opacity="+alpha+")");
+            elem.getStyle().setProperty("filter", "alpha(opacity="+alpha+")");
         }
         else // Everyone else
         {
         	setMozOpacity(elem,(new Integer(alpha).floatValue() / 100)+"");
             //DOM.setStyleAttribute(elem, "-moz-opacity", ""+(new Integer(alpha).floatValue() / 100)+"");
-            DOM.setStyleAttribute(elem, "opacity", ""+(new Integer(alpha).floatValue() / 100)+"");
+            elem.getStyle().setProperty("opacity", ""+(new Integer(alpha).floatValue() / 100)+"");
         }
     }
     

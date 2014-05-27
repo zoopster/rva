@@ -183,8 +183,8 @@ package com.risevision.ui.client.common.widgets.colorPicker;
  */
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
@@ -254,11 +254,11 @@ public final class SliderBar extends HTML
         DOM.appendChild(getElement(), colorD.getElement());
         DOM.appendChild(getElement(), slider.getElement());
 
-        DOM.setStyleAttribute(getElement(), "position", "relative");
-        DOM.setStyleAttribute(colorA.getElement(), "border", "1px solid black");
-        DOM.setStyleAttribute(colorB.getElement(), "border", "1px solid black");
-        DOM.setStyleAttribute(colorC.getElement(), "border", "1px solid black");
-        DOM.setStyleAttribute(colorD.getElement(), "border", "1px solid black");
+        getElement().getStyle().setProperty("position", "relative");
+        colorA.getElement().getStyle().setProperty("border", "1px solid black");
+        colorB.getElement().getStyle().setProperty("border", "1px solid black");
+        colorC.getElement().getStyle().setProperty("border", "1px solid black");
+        colorD.getElement().getStyle().setProperty("border", "1px solid black");
     }
 
     /***
@@ -271,21 +271,21 @@ public final class SliderBar extends HTML
 
         setColorSelectMode();
         
-        DOM.setStyleAttribute(colorA.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(colorA.getElement(), "left", vertical ? "10px" : "0px");
-        DOM.setStyleAttribute(colorA.getElement(), "top", vertical ? "0px" : "10px");
-        DOM.setStyleAttribute(colorB.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(colorB.getElement(), "left", vertical ? "10px" : "0px");
-        DOM.setStyleAttribute(colorB.getElement(), "top", vertical ? "0px" : "10px");
-        DOM.setStyleAttribute(colorC.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(colorC.getElement(), "left", vertical ? "10px" : "0px");
-        DOM.setStyleAttribute(colorC.getElement(), "top", vertical ? "0px" : "10px");
-        DOM.setStyleAttribute(colorD.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(colorD.getElement(), "left", vertical ? "10px" : "0px");
-        DOM.setStyleAttribute(colorD.getElement(), "top", vertical ? "0px" : "10px");
-        DOM.setStyleAttribute(slider.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(slider.getElement(), "left", vertical ? "1px" : "0px");
-        DOM.setStyleAttribute(slider.getElement(), "top", vertical ? "0px" : "1px");
+        colorA.getElement().getStyle().setProperty("position", "absolute");
+        colorA.getElement().getStyle().setProperty("left", vertical ? "10px" : "0px");
+        colorA.getElement().getStyle().setProperty("top", vertical ? "0px" : "10px");
+        colorB.getElement().getStyle().setProperty("position", "absolute");
+        colorB.getElement().getStyle().setProperty("left", vertical ? "10px" : "0px");
+        colorB.getElement().getStyle().setProperty("top", vertical ? "0px" : "10px");
+        colorC.getElement().getStyle().setProperty("position", "absolute");
+        colorC.getElement().getStyle().setProperty("left", vertical ? "10px" : "0px");
+        colorC.getElement().getStyle().setProperty("top", vertical ? "0px" : "10px");
+        colorD.getElement().getStyle().setProperty("position", "absolute");
+        colorD.getElement().getStyle().setProperty("left", vertical ? "10px" : "0px");
+        colorD.getElement().getStyle().setProperty("top", vertical ? "0px" : "10px");
+        slider.getElement().getStyle().setProperty("position", "absolute");
+        slider.getElement().getStyle().setProperty("left", vertical ? "1px" : "0px");
+        slider.getElement().getStyle().setProperty("top", vertical ? "0px" : "1px");
     }
 
     /**
@@ -307,25 +307,25 @@ public final class SliderBar extends HTML
             case Event.ONMOUSEMOVE:
                 if (capturedMouse)
                 {
-                    DOM.eventPreventDefault(event);
+                    event.preventDefault();
 
                     if (vertical) {
-	                    int y = DOM.eventGetClientY(event) - getAbsoluteTop() + Window.getScrollTop();
+	                    int y = event.getClientY() - getAbsoluteTop() + Window.getScrollTop();
 	
 	                    if (y < 0) y = 0;
 	                    if (y > 256) y = 256;
 	
-	                    DOM.setStyleAttribute(slider.getElement(), "top", y - 4 + "px");
+	                    slider.getElement().getStyle().setProperty("top", y - 4 + "px");
 	
 	                    if (parent != null) { parent.onBarSelected(mode, y); }
                     }
                     else {
-                        int x = DOM.eventGetClientX(event) - getAbsoluteLeft() + Window.getScrollLeft();
+                        int x = event.getClientX() - getAbsoluteLeft() + Window.getScrollLeft();
 
                         if (x < 0) x = 0;
                         if (x > 256) x = 256;
 
-                        DOM.setStyleAttribute(slider.getElement(), "left", 256 - x - 4 + "px");
+                        slider.getElement().getStyle().setProperty("left", 256 - x - 4 + "px");
                         
 	                    if (parent != null) { parent.onBarSelected(mode, x); }
                     }
@@ -527,10 +527,10 @@ public final class SliderBar extends HTML
         if (pos < 0) pos = 0;
         if (pos > 256) pos = 256;
         if (vertical) {
-            DOM.setStyleAttribute(slider.getElement(), "top", pos - 4 + "px");
+            slider.getElement().getStyle().setProperty("top", pos - 4 + "px");
         }
         else {
-            DOM.setStyleAttribute(slider.getElement(), "left", 256 - pos - 4 + "px");
+            slider.getElement().getStyle().setProperty("left", 256 - pos - 4 + "px");
         }
     }
 }

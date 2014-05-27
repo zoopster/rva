@@ -5,7 +5,7 @@
 package com.risevision.ui.client.common.widgets.background;
 
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 
 public class BackgroundPreview extends HTML {
@@ -28,18 +28,18 @@ public class BackgroundPreview extends HTML {
 		// Color preview at the top
         setWidth("54px");
         setHeight("50px");
-        DOM.setStyleAttribute(getElement(), "border", "1px solid black");
+        getElement().getStyle().setProperty("border", "1px solid black");
 
         previewEl = DOM.createDiv();
-        DOM.setStyleAttribute(previewEl, "cursor", "default");
-        DOM.setStyleAttribute(previewEl, "width", "100%");
-        DOM.setStyleAttribute(previewEl, "height", "100%");
+        previewEl.getStyle().setProperty("cursor", "default");
+        previewEl.getStyle().setProperty("width", "100%");
+        previewEl.getStyle().setProperty("height", "100%");
 
         DOM.appendChild(getElement(), previewEl);
 	}
 	
     public void setPreview(String style, boolean scaleToFit) {
-        DOM.setStyleAttribute(previewEl, "background", style);
-        DOM.setStyleAttribute(previewEl, "backgroundSize", scaleToFit ? "contain" : "");
+        previewEl.getStyle().setProperty("background", style);
+        previewEl.getStyle().setProperty("backgroundSize", scaleToFit ? "contain" : "");
     }
 }

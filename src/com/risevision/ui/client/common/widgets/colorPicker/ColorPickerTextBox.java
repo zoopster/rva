@@ -10,7 +10,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasText;
@@ -28,8 +27,8 @@ public class ColorPickerTextBox extends Composite implements HasText, ClickHandl
 	public ColorPickerTextBox() {
 		HorizontalPanel panel = new HorizontalPanel();
 		
-        DOM.setStyleAttribute(colorPickerButton.getElement(), "backgroundImage", "url(/images/color.png)");
-        DOM.setStyleAttribute(colorPickerButton.getElement(), "cursor", "hand");
+        colorPickerButton.getElement().getStyle().setProperty("backgroundImage", "url(/images/color.png)");
+        colorPickerButton.getElement().getStyle().setProperty("cursor", "hand");
         colorPickerButton.setHeight("16px");
         colorPickerButton.setWidth("16px");
         

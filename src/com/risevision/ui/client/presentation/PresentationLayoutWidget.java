@@ -277,8 +277,8 @@ public class PresentationLayoutWidget extends AbsolutePanel {
 		resizeCanvas();
 		
 		clear();
-		DOM.setStyleAttribute(presentationBackgroundPanel.getElement(), "background", "");
-        DOM.setStyleAttribute(presentationBackgroundPanel.getElement(), "backgroundSize", "");
+		presentationBackgroundPanel.getElement().getStyle().setProperty("background", "");
+        presentationBackgroundPanel.getElement().getStyle().setProperty("backgroundSize", "");
 		
 		add(backgroundPanel, 5, 5);
 		add(presentationBackgroundPanel, 5, 5);
@@ -286,8 +286,8 @@ public class PresentationLayoutWidget extends AbsolutePanel {
 		backgroundPanel.getElement().getStyle().setBackgroundColor("#FFFFFF");				
 
 		if (presentation.getBackgroundStyle() != null) {
-			DOM.setStyleAttribute(presentationBackgroundPanel.getElement(), "background", presentation.getBackgroundStyle());
-	        DOM.setStyleAttribute(presentationBackgroundPanel.getElement(), "backgroundSize", presentation.isBackgroundScaleToFit() ? "contain" : "");
+			presentationBackgroundPanel.getElement().getStyle().setProperty("background", presentation.getBackgroundStyle());
+	        presentationBackgroundPanel.getElement().getStyle().setProperty("backgroundSize", presentation.isBackgroundScaleToFit() ? "contain" : "");
 		}
 		
 		bindPlaceholders();
@@ -454,8 +454,8 @@ public class PresentationLayoutWidget extends AbsolutePanel {
 		Panel placeholderWidget = (Panel) sender;
 		
 		if (eventType == Event.BUTTON_RIGHT) {
-	    	int x = DOM.eventGetClientX(event) + 1;
-	    	int y = DOM.eventGetClientY(event) + 1;
+	    	int x = event.getClientX() + 1;
+	    	int y = event.getClientY() + 1;
 	    	contextMenuWidget.setPopupPosition(x, y);
 	    	contextMenuWidget.show();
 		}

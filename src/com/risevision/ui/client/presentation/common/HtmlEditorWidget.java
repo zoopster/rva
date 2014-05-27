@@ -9,7 +9,6 @@ import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -33,7 +32,7 @@ public class HtmlEditorWidget extends SimplePanel {
 	
 	protected void onLoad() {
 		if (editor == null) {
-			DOM.setElementAttribute(this.getElement(), "id", elementId);
+			this.getElement().getStyle().setProperty("id", elementId);
 			editor = initCodeMirrorNative();	
 		}
 		

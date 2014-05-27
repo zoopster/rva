@@ -7,7 +7,6 @@ package com.risevision.ui.client.common.widgets.textStyle;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasText;
@@ -29,8 +28,8 @@ public class TextStyleWidget extends Composite implements HasText, ClickHandler 
 		HorizontalPanel panel = new HorizontalPanel();
 		
 		panel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-        DOM.setStyleAttribute(editStyleButton.getElement(), "backgroundImage", "url(/images/font.png)");
-        DOM.setStyleAttribute(editStyleButton.getElement(), "cursor", "hand");
+        editStyleButton.getElement().getStyle().setProperty("backgroundImage", "url(/images/font.png)");
+        editStyleButton.getElement().getStyle().setProperty("cursor", "hand");
         editStyleButton.setHeight("16px");
         editStyleButton.setWidth("16px");
         

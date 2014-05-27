@@ -235,9 +235,9 @@ public final class SliderMap extends HTML
         DOM.appendChild(getElement(), colorOverlay.getElement());
         DOM.appendChild(getElement(), slider.getElement());
 
-        DOM.setStyleAttribute(getElement(), "position", "relative");
-        DOM.setStyleAttribute(colorUnderlay.getElement(), "border", "1px solid black");
-        DOM.setStyleAttribute(colorOverlay.getElement(), "border", "1px solid black");
+        getElement().getStyle().setProperty("position", "relative");
+        colorUnderlay.getElement().getStyle().setProperty("border", "1px solid black");
+        colorOverlay.getElement().getStyle().setProperty("border", "1px solid black");
     }
 
     /***
@@ -250,15 +250,15 @@ public final class SliderMap extends HTML
         
         setColorSelectMode();
 
-        DOM.setStyleAttribute(colorUnderlay.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(colorUnderlay.getElement(), "left", "0px");
-        DOM.setStyleAttribute(colorUnderlay.getElement(), "top", "0px");
-        DOM.setStyleAttribute(colorOverlay.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(colorOverlay.getElement(), "left", "0px");
-        DOM.setStyleAttribute(colorOverlay.getElement(), "top", "0px");
-        DOM.setStyleAttribute(slider.getElement(), "position", "absolute");
-        DOM.setStyleAttribute(slider.getElement(), "left", "0px");
-        DOM.setStyleAttribute(slider.getElement(), "top", "0px");
+        colorUnderlay.getElement().getStyle().setProperty("position", "absolute");
+        colorUnderlay.getElement().getStyle().setProperty("left", "0px");
+        colorUnderlay.getElement().getStyle().setProperty("top", "0px");
+        colorOverlay.getElement().getStyle().setProperty("position", "absolute");
+        colorOverlay.getElement().getStyle().setProperty("left", "0px");
+        colorOverlay.getElement().getStyle().setProperty("top", "0px");
+        slider.getElement().getStyle().setProperty("position", "absolute");
+        slider.getElement().getStyle().setProperty("left", "0px");
+        slider.getElement().getStyle().setProperty("top", "0px");
         setOverlayOpacity(100);
     }
 
@@ -283,18 +283,18 @@ public final class SliderMap extends HTML
             case Event.ONMOUSEMOVE:
                 if (capturedMouse)
                 {
-                    DOM.eventPreventDefault(event);
+                    event.preventDefault();
 
-                    int x = DOM.eventGetClientX(event) - colorUnderlay.getAbsoluteLeft() + 1 + Window.getScrollLeft();
-                    int y = DOM.eventGetClientY(event) - colorUnderlay.getAbsoluteTop() + 1 + Window.getScrollTop();
+                    int x = event.getClientX() - colorUnderlay.getAbsoluteLeft() + 1 + Window.getScrollLeft();
+                    int y = event.getClientY() - colorUnderlay.getAbsoluteTop() + 1 + Window.getScrollTop();
 
                     if (x < 0) x = 0;
                     if (x > 256) x = 256;
                     if (y < 0) y = 0;
                     if (y > 256) y = 256;
 
-                    DOM.setStyleAttribute(slider.getElement(), "left", x - 7 + "px");
-                    DOM.setStyleAttribute(slider.getElement(), "top", y - 7 + "px");
+                    slider.getElement().getStyle().setProperty("left", x - 7 + "px");
+                    slider.getElement().getStyle().setProperty("top", y - 7 + "px");
 
                     if (parent != null) { parent.onMapSelected(x,y); }
                 }
@@ -370,7 +370,7 @@ public final class SliderMap extends HTML
      */
     public void setOverlayColor(String color)
     {
-        DOM.setStyleAttribute(colorOverlay.getElement(), "backgroundColor", color);
+        colorOverlay.getElement().getStyle().setProperty("backgroundColor", color);
     }
 
     /**
@@ -396,8 +396,8 @@ public final class SliderMap extends HTML
         if (y < 0) y = 0;
         if (x > 256) x = 256;
         if (y > 256) y = 256;
-        DOM.setStyleAttribute(slider.getElement(), "left", x - 7 + "px");
-        DOM.setStyleAttribute(slider.getElement(), "top", y - 7 + "px");
+        slider.getElement().getStyle().setProperty("left", x - 7 + "px");
+        slider.getElement().getStyle().setProperty("top", y - 7 + "px");
     }
 
     /**
@@ -406,6 +406,6 @@ public final class SliderMap extends HTML
      */
     public void setUnderlayColor(String color)
     {
-        DOM.setStyleAttribute(colorUnderlay.getElement(), "backgroundColor", color);
+        colorUnderlay.getElement().getStyle().setProperty("backgroundColor", color);
     }
 }

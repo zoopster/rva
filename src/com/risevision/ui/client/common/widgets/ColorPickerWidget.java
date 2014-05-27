@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.common.widgets;
 
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class ColorPickerWidget extends TextBox {
@@ -14,7 +13,7 @@ public class ColorPickerWidget extends TextBox {
 		super();
 
 		this.id = id;
-		DOM.setElementAttribute(this.getElement(), "id", id);
+		this.getElement().getStyle().setProperty("id", id);
 		
 		this.setStyleName("color {required:false, pickerPosition:'right', hash:true, adjust:false}");
 	}

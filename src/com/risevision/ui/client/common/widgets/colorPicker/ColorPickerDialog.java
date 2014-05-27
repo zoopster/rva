@@ -11,7 +11,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -99,9 +98,9 @@ public class ColorPickerDialog extends PopupPanel {
         transparencyPanel.add(new SpacerWidget());
     	transparencySwab.setWidth("20px");
     	transparencySwab.setHeight("20px");
-        DOM.setStyleAttribute(transparencySwab.getElement(), "border", "1px solid #666");
+        transparencySwab.getElement().getStyle().setProperty("border", "1px solid #666");
 //        DOM.setStyleAttribute(getElement(), "cursor", "default");
-        DOM.setStyleAttribute(transparencySwab.getElement(), "backgroundImage", "url(/images/preview-opacity.png)");
+        transparencySwab.getElement().getStyle().setProperty("backgroundImage", "url(/images/preview-opacity.png)");
         transparencyPanel.add(transparencySwab);
         
         VerticalPanel previewPanel = new VerticalPanel();
