@@ -4,7 +4,7 @@
 
 package com.risevision.ui.client.common.utils;
 
-import com.google.gwt.user.client.Element;
+import com.google.gwt.dom.client.Element;
 
 public class HtmlUtils {
 	public static native void writeHtml(Element myFrame, String html)  /*-{

@@ -182,10 +182,10 @@ package com.risevision.ui.client.common.widgets;
  * DAMAGE.
  */
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
@@ -214,7 +214,7 @@ public final class SliderBarWidget extends HTML {
 
         this.vertical = vertical;
 
-        DOM.setStyleAttribute(getElement(), "position", "relative");
+        getElement().getStyle().setProperty("position", "relative");
         
         Element targetEl = DOM.createDiv();
 
@@ -268,7 +268,7 @@ public final class SliderBarWidget extends HTML {
 
         halfThumb = (vertical ? thumb.getClientHeight() : thumb.getClientWidth()) / 2;
 
-		DOM.setStyleAttribute(thumb, vertical ? "top" : "left", 0 - halfThumb + "px");
+		thumb.getStyle().setProperty(vertical ? "top" : "left", 0 - halfThumb + "px");
     }
 
     /**
@@ -290,25 +290,25 @@ public final class SliderBarWidget extends HTML {
             case Event.ONMOUSEMOVE:
                 if (capturedMouse)
                 {
-                    DOM.eventPreventDefault(event);
+                    event.preventDefault();
 
                     if (vertical) {
-	                    int y = DOM.eventGetClientY(event) - getAbsoluteTop() + Window.getScrollTop() - 7;
+	                    int y = event.getClientY() - getAbsoluteTop() + Window.getScrollTop() - 7;
 	
 	                    if (y < 0) y = 0;
 	                    if (y > length) y = length;
 
-	                    DOM.setStyleAttribute(thumb, "top", y - halfThumb + "px");
+	                    thumb.getStyle().setProperty("top", y - halfThumb + "px");
 	                    
 	                    pos = y;
                     }
                     else {
-                        int x = DOM.eventGetClientX(event) - getAbsoluteLeft() + Window.getScrollLeft() - 7;
+                        int x = event.getClientX() - getAbsoluteLeft() + Window.getScrollLeft() - 7;
 
                         if (x < 0) x = 0;
                         if (x > length) x = length;
 
-                        DOM.setStyleAttribute(thumb, "left", x - halfThumb + "px");
+                        thumb.getStyle().setProperty("left", x - halfThumb + "px");
                         
                         pos = x;
                     }
@@ -348,7 +348,7 @@ public final class SliderBarWidget extends HTML {
         if (pos < 0) pos = 0;
         if (pos > length) pos = length;
         
-        DOM.setStyleAttribute(thumb, vertical ? "top" : "left", pos - halfThumb + "px");
+        thumb.getStyle().setProperty(vertical ? "top" : "left", pos - halfThumb + "px");
         
         this.pos = pos;
     }

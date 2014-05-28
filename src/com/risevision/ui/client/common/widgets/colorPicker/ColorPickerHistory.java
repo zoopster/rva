@@ -6,7 +6,6 @@ package com.risevision.ui.client.common.widgets.colorPicker;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
@@ -56,9 +55,9 @@ public class ColorPickerHistory extends Composite implements ClickHandler {
         	colorSwab.setWidth("20px");
         	colorSwab.setHeight("20px");
 
-            DOM.setStyleAttribute(colorSwab.getElement(), "border", "1px solid #000");
+            colorSwab.getElement().getStyle().setProperty("border", "1px solid #000");
 //            DOM.setStyleAttribute(getElement(), "cursor", "default");
-            DOM.setStyleAttribute(colorSwab.getElement(), "backgroundColor", color);
+            colorSwab.getElement().getStyle().setProperty("backgroundColor", color);
         	colorSwab.addClickHandler(this);
         	
         	table.setWidget(i / 2, i % 2, colorSwab);

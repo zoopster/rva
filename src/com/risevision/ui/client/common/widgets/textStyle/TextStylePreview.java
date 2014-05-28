@@ -4,9 +4,9 @@
 
 package com.risevision.ui.client.common.widgets.textStyle;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 import com.risevision.ui.client.common.utils.HtmlUtils;
 
@@ -43,7 +43,7 @@ public class TextStylePreview extends HTML {
 		// Color preview at the top
         setWidth("108px");
         setHeight("50px");
-        DOM.setStyleAttribute(getElement(), "border", "1px solid black");
+        getElement().getStyle().setProperty("border", "1px solid black");
 	}
 
     public void setPreview(String font, String className) {

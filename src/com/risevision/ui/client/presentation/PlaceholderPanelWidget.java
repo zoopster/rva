@@ -61,10 +61,10 @@ public class PlaceholderPanelWidget extends FocusPanel {
 	        	event.preventDefault();
 	        	break;
 	        case Event.ONMOUSEUP:
-	        	if (DOM.eventGetButton(event) == Event.BUTTON_LEFT) {//	        		GWT.log("Event.BUTTON_LEFT", null);
+	        	if (event.getButton() == Event.BUTTON_LEFT) {//	        		GWT.log("Event.BUTTON_LEFT", null);
 	        		PresentationLayoutWidget.getInstance().onClick(this, event, Event.BUTTON_LEFT);
 	        	}
-	        	if (DOM.eventGetButton(event) == Event.BUTTON_RIGHT) {
+	        	if (event.getButton() == Event.BUTTON_RIGHT) {
 		        	event.preventDefault();
 //	        		GWT.log("Event.BUTTON_RIGHT", null);
 	        		PresentationLayoutWidget.getInstance().onClick(this, event, Event.BUTTON_RIGHT);

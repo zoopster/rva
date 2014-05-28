@@ -10,7 +10,6 @@ import com.google.gwt.event.dom.client.HasLoadHandlers;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 
@@ -29,7 +28,7 @@ public class RichTextEditorWidget extends Composite implements HasLoadHandlers {
 
 		textArea = new TextArea();
 		textArea.setWidth("90%");
-		DOM.setElementAttribute(textArea.getElement(), "id", editorId);
+		textArea.getElement().getStyle().setProperty("id", editorId);
 		initWidget(textArea);
 
 		// DeferredCommand.addCommand(new Command() {

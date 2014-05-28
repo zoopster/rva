@@ -4,11 +4,11 @@
 
 package com.risevision.ui.client.gadget;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Frame;
 import com.risevision.common.client.info.GadgetSettingsInfo;
 import com.risevision.ui.client.common.utils.HtmlUtils;

@@ -4,9 +4,9 @@
 
 package com.risevision.ui.client.presentation;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -86,8 +86,8 @@ public class ItemPreviewWidget extends SimplePanel {
 	public ItemPreviewWidget(PlaceholderInfo placeholder) {
 		if (placeholder != null) {
 			if (placeholder.getBackgroundStyle() != null) {
-				DOM.setStyleAttribute(getElement(), "background", placeholder.getBackgroundStyle());
-		        DOM.setStyleAttribute(getElement(), "backgroundSize", placeholder.isBackgroundScaleToFit() ? "contain" : "");
+				getElement().getStyle().setProperty("background", placeholder.getBackgroundStyle());
+		        getElement().getStyle().setProperty("backgroundSize", placeholder.isBackgroundScaleToFit() ? "contain" : "");
 			}
 			
 			if (placeholder.getPlaylistItems() != null && placeholder.getPlaylistItems().size() > 0) {

@@ -4,9 +4,9 @@
 
 package com.risevision.ui.client.common.widgets.colorPicker;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 
 public class ColorPickerPreview extends HTML {
@@ -31,13 +31,13 @@ public class ColorPickerPreview extends HTML {
 		// Color preview at the top
         setWidth("54px");
         setHeight("50px");
-        DOM.setStyleAttribute(getElement(), "backgroundImage", "url(/images/preview-opacity.png)");
-        DOM.setStyleAttribute(getElement(), "border", "1px solid black");
+        getElement().getStyle().setProperty("backgroundImage", "url(/images/preview-opacity.png)");
+        getElement().getStyle().setProperty("border", "1px solid black");
 
         previewEl = DOM.createDiv();
-        DOM.setStyleAttribute(previewEl, "cursor", "default");
-        DOM.setStyleAttribute(previewEl, "width", "100%");
-        DOM.setStyleAttribute(previewEl, "height", "100%");
+        previewEl.getStyle().setProperty("cursor", "default");
+        previewEl.getStyle().setProperty("width", "100%");
+        previewEl.getStyle().setProperty("height", "100%");
 
         DOM.appendChild(getElement(), previewEl);
         setPreview("ff0000");
@@ -48,7 +48,7 @@ public class ColorPickerPreview extends HTML {
 	}
 	
     public void setPreview(String color) {
-        DOM.setStyleAttribute(previewEl, "backgroundColor", color);
+        previewEl.getStyle().setProperty("backgroundColor", color);
         
         if (colorChanged != null) {
         	colorChanged.execute();
