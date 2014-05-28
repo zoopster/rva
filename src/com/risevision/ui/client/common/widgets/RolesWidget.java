@@ -40,11 +40,11 @@ public class RolesWidget extends Grid{
 		roles.add(new RoleInfo(UserRole.USER_ADMINISTRATOR, "Administrator",
 				"Can manage Users, Company, Network, and Sub Companies"));
 		
-//		roles.add(new RoleInfo(UserRole.PURCHASER, "Purchaser",
-//				"Can Purchase products from the Rise Vision Store"));
-//		
-//		roles.add(new RoleInfo(UserRole.BILLING_ADMINISTRATOR, "Billing Administrator",
-//				"Can Manage products in the Rise Vision Store"));
+		roles.add(new RoleInfo(UserRole.PURCHASER, "Purchaser",
+				"Can Purchase products from the Rise Vision Store"));
+		
+		roles.add(new RoleInfo(UserRole.BILLING_ADMINISTRATOR, "Billing Administrator",
+				"Can Manage products in the Rise Vision Store"));
 		
 		roles.add(new RoleInfo(UserRole.SYSTEM_ADMINISTRATOR, "System",
 				"Can add and move Companies and manage Network Settings"));

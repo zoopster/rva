@@ -293,10 +293,13 @@ public class UserManageWidget extends Composite {
 		if (userIsUserAdmin)
 			rolesWidget.enableRole(UserRole.USER_ADMINISTRATOR, !usersOwnProfile);
 		
-		rolesWidget.showRole(UserRole.SYSTEM_ADMINISTRATOR, SelectedCompanyController.getInstance().getUserCompany().isRise() && SelectedCompanyController.getInstance().getSelectedCompany().isRise());
-//		boolean parentCompanyIsRise = ConfigurationController.getInstance().getConfiguration().getRiseId().equals(SelectedCompanyController.getInstance().getSelectedCompany().getParentId());
+		boolean companyIsRise = SelectedCompanyController.getInstance().getUserCompany().isRise() 
+				&& SelectedCompanyController.getInstance().getSelectedCompany().isRise();
 		
-//		rolesWidget.showRole(UserRole.SYSTEM_ADMINISTRATOR, parentCompanyIsRise || SelectedCompanyController.getInstance().getSelectedCompany().isRise());
+		rolesWidget.showRole(UserRole.BILLING_ADMINISTRATOR, companyIsRise);
+		rolesWidget.enableRole(UserRole.BILLING_ADMINISTRATOR, userIsUserAdmin);
+		
+		rolesWidget.showRole(UserRole.SYSTEM_ADMINISTRATOR, companyIsRise);
 		rolesWidget.enableRole(UserRole.SYSTEM_ADMINISTRATOR, userIsUserAdmin);
 		
 		statusWidget.setEnabled(userIsUserAdmin && !usersOwnProfile);
