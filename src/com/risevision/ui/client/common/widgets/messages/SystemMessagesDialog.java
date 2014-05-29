@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.risevision.common.client.utils.RiseUtils;
 import com.risevision.ui.client.common.info.SystemMessageInfo;
+import com.risevision.ui.client.common.widgets.iframe.DialogBoxWidget;
 
 public class SystemMessagesDialog {
 	private static final String HTML_STRING = "<html>"
@@ -21,7 +22,8 @@ public class SystemMessagesDialog {
 			+ "	 <div class='container'>"
 			+ "    <div class='alert alert-system-message alert-dismissable'>"
 			+ "	     <div class='container'>"
-			+ "        <button type='button' id='alert-close-btn'  class='close close-alert' onclick='parent.rdn2_dialogBox_close();'>"
+			+ "        <button type='button' id='alert-close-btn'  class='close close-alert' "
+			+ "				onclick='%close%'>"
 			+ "          <img src='../images/close-btn.png' width='24' height='24'>"
 			+ "        </button>"
 			+ "        <div class='alert-text'>"
