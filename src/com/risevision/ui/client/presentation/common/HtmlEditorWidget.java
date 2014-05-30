@@ -32,7 +32,7 @@ public class HtmlEditorWidget extends SimplePanel {
 	
 	protected void onLoad() {
 		if (editor == null) {
-			this.getElement().getStyle().setProperty("id", elementId);
+			this.getElement().setAttribute("id", elementId);
 			editor = initCodeMirrorNative();	
 		}
 		
