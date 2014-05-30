@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.restlet.jar" sourcepath="C:/GoogleSVN/restlet-gae-2.0.1/src/org.restlet"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-dnd-3.0.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-dnd-3.3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/com.risevision.core.api.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/signpost-core.jar" sourcepath="/kaeppler-signpost-c403143"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.restlet.ext.net.jar" sourcepath="C:/GoogleSVN/restlet-gae-2.0.1/src"/>
