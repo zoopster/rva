@@ -4,30 +4,20 @@
 
 package com.risevision.ui.client.gadget;
 
-import com.google.gwt.dom.client.Style.Unit;
+import java.util.List;
+
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.risevision.ui.client.common.info.WidgetSettingsInfo;
-import com.risevision.ui.client.common.utils.HtmlUtils;
+import com.risevision.ui.client.common.widgets.iframe.CommandType;
+import com.risevision.ui.client.common.widgets.iframe.RpcDialogBoxWidget;
 import com.risevision.ui.client.presentation.PresentationLayoutWidget;
 
-public class WidgetCustomUIWidget extends Frame {
+public class WidgetCustomUIWidget extends RpcDialogBoxWidget {
 	private static WidgetCustomUIWidget instance;
 	
-	private static final String HTML_STRING = "<html>" +
-			"<head>" +
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"http://ig.gmodules.com/gadgets/js/rpc.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/globals.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/urlparams.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/config.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/wpm.transport.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/rpc.js\"></script>" +
-			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/gadgets.min.js\"></script>" +
-			"" +
+	private static final String HTML_STRING = "" +
 			GadgetCommandHelper.HTML_STRING +
 			"" +
 			"<script type=\"text/javascript\">" +
@@ -53,11 +43,12 @@ public class WidgetCustomUIWidget extends Frame {
 			"					additionalParams = data.additionalParams;" +
 			"				}" +
 			"			}" +
-			"			parent.rdn2_googlePicker_widgetSave(params, additionalParams);" +
+			"			var paramsArray = [ params, additionalParams ];" +
+			"			%save%" +
 			"		}" +
 			"	}" +
 			"	function closeSettings() {" +
-			"		parent.rdn2_googlePicker_widgetClose();" +
+			"		%close%" +
 			"	}" +
 //			"	function editorFrameReady() {" +
 //			"		parent.rdn2_rpc_customUI_editorFrameReady();" +
@@ -113,19 +104,7 @@ public class WidgetCustomUIWidget extends Frame {
 			"		}" +
 			"	}" +
 			"</script>" +
-			"</head>" +
-			"<body style=\"margin:0px;\">" +
-			"	<div id=\"divEditor\" name=\"divEditor\" style=\"width: 100%; height: 100%;\">" +
-			"		<iframe id=\"if_divEditor\" name=\"if_divEditor\" allowTransparency=\"true\" " +
-			"			style=\"display:block;position:absolute;height:100%;width:100%;\" " +
-			"			frameborder=0 scrolling=\"no\" src=\"%url%\">" +
-			"		</iframe>" +
-			"	</div>" +
-			"</body>" +
-			"</html>" +
 			"";
-	
-	private PopupPanel containerPanel = new PopupPanel(false, false);
 	
 	private WidgetSettingsInfo widgetSettings;
 	
@@ -142,47 +121,16 @@ public class WidgetCustomUIWidget extends Frame {
 		return instance;
 	}
 	
-	public WidgetCustomUIWidget() {
-//		frame.getElement().setId("gadgetCustomrUiFrame");
-//		frame.getElement().setAttribute("name","gadgetCustomrUiFrame");
+	private WidgetCustomUIWidget() {
 
-		containerPanel.add(this);
-		
 		GadgetCommandHelper.init();
+
+		String htmlString = HTML_STRING.replace("%save%", getButtonString(CommandType.SAVE_COMMAND, "paramsArray"))
+				.replace("%close%", getButtonString(CommandType.CLOSE_COMMAND));
+
+		init(htmlString);
+		
 		registerJavaScriptCallbacks();
-		
-		styleControls();
-		
-	}
-
-	private void styleControls() {
-		setSize("100%", "100%");
-		
-		getElement().getStyle().setBorderWidth(0, Unit.PX);
-		getElement().setAttribute("frameborder", "0");
-		getElement().setAttribute("scrolling", "no");
-		
-		containerPanel.removeStyleName("gwt-PopupPanel");
-		containerPanel.getElement().getStyle().setProperty("width", "100%");
-		containerPanel.getElement().getStyle().setProperty("height", "100%");
-		containerPanel.getElement().getStyle().setBackgroundColor("transparent");
-		
-		showPanel(false);
-	}
-	
-	private void showPanel(boolean show) {
-		containerPanel.getElement().getStyle().setZIndex(show ? 1000 : -1000);
-		containerPanel.getElement().getStyle().setOpacity(show ? 1 : 0);
-		
-		if (show) containerPanel.show();
-		else containerPanel.hide();
-	}
-
-	protected void onLoad() {
-		super.onLoad();
-	}
-	
-	private static void onPickerReady() {
 
 	}
 
@@ -203,104 +151,15 @@ public class WidgetCustomUIWidget extends Frame {
 		
 		url = url.replace("'", "\\'");
 
-		String params = widgetSettings.getAdditionalParams() != null ? widgetSettings.getAdditionalParams() : "";
-		params = params.replace("\"", "\\\"");
+//		String params = widgetSettings.getAdditionalParams() != null ? widgetSettings.getAdditionalParams() : "";
+//		params = params.replace("\"", "\\\"");
 		
-		final String htmlString = HTML_STRING.replace("%url%", url)
-								.replace("%s1%", params);
-		
-//		this.addLoadHandler(new LoadHandler() {
-//			@Override
-//			public void onLoad(LoadEvent event) {
-//			}
-//		});
-		
-		showPanel(true);
-		
-		HtmlUtils.writeHtml(getElement(), htmlString);	
-	}
-	
-	public void hide() {
-		showPanel(false);
+		show(url);
 	}
 	
 //	public void save() {
 //		//make an asynch call to the gadget to get the setting.
 //		saveSettingsAsync(getElement());
-//	}
-	
-//	private void doActionCancel() {
-//		setVisible(false);
-//	}
-	
-//		try {
-//			String xmlUrl = getGadgetXmlUrl();
-//			String[] ray = getGadgetUrl().substring(xmlUrl.length()+1).split("&");
-//			urlParams.clear();
-//			for (int i = 0; i < ray.length; i++) {
-//				String[] substrRay = ray[i].split("=");
-//				if (substrRay.length == 2)
-//					urlParams.put(substrRay[0], substrRay[1]);
-//				else if (substrRay.length == 1)
-//					urlParams.put(substrRay[0], "");
-//			}
-//		} catch(Exception ex) {}
-//	}
-	
-//	private String buildUrl() {
-//		String params = "";
-//				
-//		for (Map.Entry<String, String> obj: urlParams.entrySet()) {
-//			params += "&" + obj.getKey() + "=" + obj.getValue();
-//		}
-//
-//		return getGadgetXmlUrl() + params;
-//	}
-
-//	private void parseOnSaveResponse(String params) {
-//		try {
-//			if ((params != null) && (params.length() > 1)) {
-//				String[] ray = params.split("&");
-//				urlParams.clear();
-//				for (int i = 0; i < ray.length; i++) {
-//					if (ray[i].length() > 1) {
-//						String[] substrRay = ray[i].split("=");
-//						if (substrRay.length == 2)
-//							urlParams.put(substrRay[0], substrRay[1]);
-//						else if (substrRay.length == 1)
-//							urlParams.put(substrRay[0], "");
-//					}
-//				}
-//			}
-//		} catch (Exception ex) {
-//		}
-//	}
-	
-//	public void init(String gadgetUrl, String additionalParams) {
-//		setGadgetUrl(gadgetUrl);
-//
-//		this.additionalParams = additionalParams;
-//	}
-	
-//	public String getGadgetXmlUrl() {
-//		//handle improperly url that have "?"
-//		String res = getGadgetUrl().replaceFirst("\\?", "&");
-//		//get the gadget URL part
-//		int queryParamsStartPos = res.indexOf('&');
-//		if (queryParamsStartPos > 0)
-//			res = getGadgetUrl().substring(0, queryParamsStartPos);
-//		return res;
-//	}
-
-	// Expose the following method into JavaScript.
-//	private static void onSaveCallback(String params) {
-//		System.out.println("onSave: params = " + params);
-//		instance.saveAndClose(params);
-//	}
-
-	// Expose the following method into JavaScript.
-//	private static String onGetGadgetUrl() {
-//		return instance.gadgetUrl;
 //	}
 	
 	private static String onWidgetGetAdditionParamsStatic() {
@@ -310,13 +169,9 @@ public class WidgetCustomUIWidget extends Frame {
 		
 		return "";
 	}
-	
-	private static void onWidgetSaveStatic(String params, String additionalParams) {
-		instance.onWidgetSave(params, additionalParams);
-	}
 
 	private void onWidgetSave(String params, String additionalParams) {
-		showPanel(false);
+		hide();
 
 		if (widgetSettings != null) {
 			widgetSettings.setParams(params);
@@ -333,19 +188,27 @@ public class WidgetCustomUIWidget extends Frame {
 		}
 	}
 	
-	private static void onWidgetCloseStatic() {
-		instance.showPanel(false);
+	@Override
+	public void onMessage(String command, List<String> values) {
+		
+		if (command.equals(CommandType.SAVE_COMMAND)) {
+			String params = values.get(0);
+			String additionalParams = values.get(1);
+			
+			onWidgetSave(params, additionalParams);
+		}
+		else if (command.equals(CommandType.CLOSE_COMMAND)) {
+			hide();
+		}
+		
 	}
-	
+
 	// Set up the JS-callable signature as a global JS function.
 	private native void registerJavaScriptCallbacks() /*-{
-		$wnd.rdn2_rpc_widgetUI_widgetGetAdditionalParams = @com.risevision.ui.client.gadget.WidgetCustomUIWidget::onWidgetGetAdditionParamsStatic();
-	
-//		$wnd.rdn2_rpc_widgetUI_widgetReady = @com.risevision.ui.client.gadget.WidgetCustomUiWidget::onWidgetReady();
-		$wnd.rdn2_googlePicker_widgetSave = @com.risevision.ui.client.gadget.WidgetCustomUIWidget::onWidgetSaveStatic(Ljava/lang/String;Ljava/lang/String;);
-		$wnd.rdn2_googlePicker_widgetClose = @com.risevision.ui.client.gadget.WidgetCustomUIWidget::onWidgetCloseStatic();
+		$wnd.rdn2_rpc_widgetUI_widgetGetAdditionalParams = @com.risevision.ui.client.gadget.WidgetCustomUIWidget::onWidgetGetAdditionParamsStatic();	
 	}-*/;
 
+	
 //	private native String saveSettingsAsync(Element gadgetFrame) /*-{
 //		var res = "";
 //	

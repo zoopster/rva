@@ -32,8 +32,8 @@ public final class DialogBoxWidget extends IFramePanelWidget {
 	public void showPanel(Command command, boolean show, String htmlString) {
 		this.command = command;
 		
-		htmlString = htmlString.replace("%okay%", getOkayButtonString())
-				.replace("%close%", getCloseButtonString());
+		htmlString = htmlString.replace("%okay%", getButtonString(CommandType.OKAY_COMMAND))
+				.replace("%close%", getButtonString(CommandType.CLOSE_COMMAND));
 		
 		init(htmlString);
 		show();
@@ -60,14 +60,6 @@ public final class DialogBoxWidget extends IFramePanelWidget {
 	
 	public boolean getResult() {
 		return result;
-	}
-	
-	protected String getCloseButtonString() {
-		return "parent.rva_iFrameController_onMessageStatic(\"" + iFrameName + "\", \"" + CommandType.CLOSE_COMMAND + "\");";
-	}
-
-	protected String getOkayButtonString() {
-		return "parent.rva_iFrameController_onMessageStatic(\"" + iFrameName + "\", \"" + CommandType.OKAY_COMMAND + "\");";
 	}
 	
 	// Set up the JS-callable signature as a global JS function.

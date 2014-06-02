@@ -4,30 +4,20 @@
 
 package com.risevision.ui.client.common.widgets.mediaLibrary;
 
-import com.google.gwt.dom.client.Style.Unit;
+import java.util.List;
+
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.risevision.ui.client.common.info.WidgetSettingsInfo;
-import com.risevision.ui.client.common.utils.HtmlUtils;
+import com.risevision.ui.client.common.widgets.iframe.CommandType;
+import com.risevision.ui.client.common.widgets.iframe.RpcDialogBoxWidget;
 import com.risevision.ui.client.gadget.GadgetCommandHelper;
 
-public class StorageFrameWidget extends Frame {
+public class StorageFrameWidget extends RpcDialogBoxWidget {
 	private static StorageFrameWidget instance;
 	
-	private static final String HTML_STRING = "<html>" +
-			"<head>" +
-			"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"http://ig.gmodules.com/gadgets/js/rpc.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/globals.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/urlparams.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/config.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/wpm.transport.js\"></script>" +
-//			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/rpc.js\"></script>" +
-			"<script type=\"text/javascript\" language=\"javascript\" src=\"/gadgets/gadgets.min.js\"></script>" +
-			"" +
+	private static final String HTML_STRING = 
 			GadgetCommandHelper.HTML_STRING +
 			"" +
 			"<script type=\"text/javascript\">" +
@@ -49,15 +39,13 @@ public class StorageFrameWidget extends Frame {
 			"					additionalParams = data.additionalParams;" +
 			"				}" +
 			"			}" +
-			"			parent.rdn2_storage_widgetSave(params, additionalParams);" +
+			"			var paramsArray = [ params, additionalParams ];" +
+			"			%save%" +
 			"		}" +
 			"	}" +
 			"	function closeSettings() {" +
-			"		parent.rdn2_storage_widgetClose();" +
+			"		%close%" +
 			"	}" +
-//			"	function editorFrameReady() {" +
-//			"		parent.rdn2_rpc_customUI_editorFrameReady();" +
-//			"	}" +
 			"	function loadEditor() {" +
 			"		gadgets.rpc.register(\"rscmd_saveSettings\", saveSettings);" +
 			"		gadgets.rpc.register(\"rscmd_closeSettings\", closeSettings);" +
@@ -78,20 +66,8 @@ public class StorageFrameWidget extends Frame {
 			"		}" +
 			"	}" +
 			"</script>" +
-			"</head>" +
-			"<body style=\"margin:0px;\">" +
-			"	<div id=\"divEditor\" name=\"divEditor\" style=\"width: 100%; height: 100%;\">" +
-			"		<iframe id=\"if_divEditor\" name=\"if_divEditor\" allowTransparency=\"true\" " +
-			"			style=\"display:block;position:absolute;height:100%;width:100%;\" " +
-			"			frameborder=0 scrolling=\"no\" src=\"%url%\">" +
-			"		</iframe>" +
-			"	</div>" +
-			"</body>" +
-			"</html>" +
 			"";
-	
-	private PopupPanel containerPanel = new PopupPanel(false, false);
-	
+		
 	private WidgetSettingsInfo widgetSettings;
 	
 	private Command onSave;
@@ -108,47 +84,15 @@ public class StorageFrameWidget extends Frame {
 	}
 	
 	public StorageFrameWidget() {
-//		frame.getElement().setId("gadgetCustomrUiFrame");
-//		frame.getElement().setAttribute("name","gadgetCustomrUiFrame");
+		super();
 
-		containerPanel.add(this);
-		
 		GadgetCommandHelper.init();
-		registerJavaScriptCallbacks();
 		
-		styleControls();
+		String htmlString = HTML_STRING.replace("%save%", getButtonString(CommandType.SAVE_COMMAND, "paramsArray"))
+										.replace("%close%", getButtonString(CommandType.CLOSE_COMMAND));
 		
-	}
-
-	private void styleControls() {
-		setSize("100%", "100%");
+		init(htmlString);
 		
-		getElement().getStyle().setBorderWidth(0, Unit.PX);
-		getElement().setAttribute("frameborder", "0");
-		getElement().setAttribute("scrolling", "no");
-		
-		containerPanel.removeStyleName("gwt-PopupPanel");
-		containerPanel.getElement().getStyle().setProperty("width", "100%");
-		containerPanel.getElement().getStyle().setProperty("height", "100%");
-		containerPanel.getElement().getStyle().setBackgroundColor("transparent");
-		
-		showPanel(false);
-	}
-	
-	private void showPanel(boolean show) {
-		containerPanel.getElement().getStyle().setZIndex(show ? 1000 : -1000);
-		containerPanel.getElement().getStyle().setOpacity(show ? 1 : 0);
-		
-		if (show) containerPanel.show();
-		else containerPanel.hide();
-	}
-
-	protected void onLoad() {
-		super.onLoad();
-	}
-	
-	private static void onPickerReady() {
-
 	}
 
 //	public void show(Command onSave) {
@@ -166,33 +110,11 @@ public class StorageFrameWidget extends Frame {
 		
 		url = url.replace("'", "\\'");
 
-		String params = widgetSettings.getAdditionalParams() != null ? widgetSettings.getAdditionalParams() : "";
-		params = params.replace("\"", "\\\"");
-		
-		final String htmlString = HTML_STRING.replace("%url%", url)
-								.replace("%s1%", params);
-		
-//		this.addLoadHandler(new LoadHandler() {
-//			@Override
-//			public void onLoad(LoadEvent event) {
-//			}
-//		});
-		
-		showPanel(true);
-		
-		HtmlUtils.writeHtml(getElement(), htmlString);	
-	}
-	
-	public void hide() {
-		showPanel(false);
-	}
-	
-	private static void onWidgetSaveStatic(String params, String additionalParams) {
-		instance.onWidgetSave(params, additionalParams);
+		show(url);
 	}
 
 	private void onWidgetSave(String params, String additionalParams) {
-		showPanel(false);
+		hide();
 
 		if (widgetSettings != null) {
 			widgetSettings.setParams(params);
@@ -202,16 +124,20 @@ public class StorageFrameWidget extends Frame {
 			}
 		}
 	}
-	
-	private static void onWidgetCloseStatic() {
-		instance.showPanel(false);
+
+	@Override
+	public void onMessage(String command, List<String> values) {
+
+		if (command.equals(CommandType.SAVE_COMMAND)) {
+			String params = values.get(0);
+			String additionalParams = values.get(1);
+			
+			onWidgetSave(params, additionalParams);
+		}
+		else if (command.equals(CommandType.CLOSE_COMMAND)) {
+			hide();
+		}		
+		
 	}
-	
-	// Set up the JS-callable signature as a global JS function.
-	private native void registerJavaScriptCallbacks() /*-{	
-//		$wnd.rdn2_rpc_widgetUI_widgetReady = @com.risevision.ui.client.common.widgets.mediaLibrary.MediaLibraryFrameWidget::onWidgetReady();
-		$wnd.rdn2_storage_widgetSave = @com.risevision.ui.client.common.widgets.mediaLibrary.StorageFrameWidget::onWidgetSaveStatic(Ljava/lang/String;Ljava/lang/String;);
-		$wnd.rdn2_storage_widgetClose = @com.risevision.ui.client.common.widgets.mediaLibrary.StorageFrameWidget::onWidgetCloseStatic();
-	}-*/;
 
 }
