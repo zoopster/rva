@@ -5,12 +5,11 @@
 package com.risevision.ui.client.user;
 
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.ui.Frame;
 import com.risevision.ui.client.common.controller.ConfigurationController;
 import com.risevision.ui.client.common.info.PrerequisitesInfo;
-import com.risevision.ui.client.common.widgets.messages.DialogBoxWidget;
+import com.risevision.ui.client.common.widgets.iframe.DialogBoxWidget;
 
-public class UserTermsWidget extends Frame {
+public class UserTermsWidget {
 
 	private static String NEW_USER_TEXT = "It's doesn't look like we have seen you here before. " +
 			"If it is okay with you and you are in agreement with our %termsUrl%, we will go " +
@@ -44,9 +43,9 @@ public class UserTermsWidget extends Frame {
 			+ "      <p>%text2%</p>"
 			+ "      <br>	"
 			+ "      <input type='submit' class='btn btn-primary' value='I Agree'"
-			+ "        onclick='parent.rdn2_dialogBox_okay();'> "
+			+ "        onclick='%okay%'> "
 			+ "      <input type='submit' class='btn btn-primary' value='Cancel'"
-			+ "        onclick='parent.rdn2_dialogBox_close();'>"
+			+ "        onclick='%close%'>"
 			+ "    </div>"
 			+ "  </div>"
 			+ "</body>"
@@ -74,7 +73,7 @@ public class UserTermsWidget extends Frame {
 	
 		String htmlString = HTML_STRING.replace("%text1%", text1)
 				.replace("%text2%", text2);
-		
+
 		dialogBox.showPanel(termsCommand, true, htmlString);
 	}
 	

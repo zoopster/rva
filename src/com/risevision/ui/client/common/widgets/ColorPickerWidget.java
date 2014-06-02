@@ -13,7 +13,7 @@ public class ColorPickerWidget extends TextBox {
 		super();
 
 		this.id = id;
-		this.getElement().getStyle().setProperty("id", id);
+		this.getElement().setAttribute("id", id);
 		
 		this.setStyleName("color {required:false, pickerPosition:'right', hash:true, adjust:false}");
 	}

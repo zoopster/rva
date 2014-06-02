@@ -28,7 +28,7 @@ public class RichTextEditorWidget extends Composite implements HasLoadHandlers {
 
 		textArea = new TextArea();
 		textArea.setWidth("90%");
-		textArea.getElement().getStyle().setProperty("id", editorId);
+		textArea.getElement().setAttribute("id", editorId);
 		initWidget(textArea);
 
 		// DeferredCommand.addCommand(new Command() {
