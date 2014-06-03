@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.risevision.ui.client.common.ContentId;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.controller.UserAccountController;
-import com.risevision.ui.client.common.widgets.mediaLibrary.StorageAppWidget;
+import com.risevision.ui.client.common.widgets.mediaLibrary.StorageFrameWidget;
 
 public class MenuWidget extends FlowPanel {
 	private static MenuWidget instance;	
@@ -97,7 +97,7 @@ public class MenuWidget extends FlowPanel {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				StorageAppWidget.getInstance().show(null);
+				StorageFrameWidget.getInstance().show(null);
 			}
 		});
 //		newLink.setHref(ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL() + "#/files/" + SelectedCompanyController.getInstance().getSelectedCompanyId());

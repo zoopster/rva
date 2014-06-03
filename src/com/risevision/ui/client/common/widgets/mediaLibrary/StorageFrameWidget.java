@@ -9,7 +9,8 @@ import java.util.List;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.risevision.ui.client.common.info.WidgetSettingsInfo;
+import com.risevision.ui.client.common.controller.ConfigurationController;
+import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.widgets.iframe.CommandType;
 import com.risevision.ui.client.common.widgets.iframe.RpcDialogBoxWidget;
 import com.risevision.ui.client.gadget.GadgetCommandHelper;
@@ -68,9 +69,9 @@ public class StorageFrameWidget extends RpcDialogBoxWidget {
 			"</script>" +
 			"";
 		
-	private WidgetSettingsInfo widgetSettings;
-	
 	private Command onSave;
+	
+	private String widgetResponse = "";
 	
 	public static StorageFrameWidget getInstance() {
 		try {
@@ -95,18 +96,14 @@ public class StorageFrameWidget extends RpcDialogBoxWidget {
 		
 	}
 
-//	public void show(Command onSave) {
-//		show(onSave, null);
-//	}
-	
-	public void show(Command onSave, WidgetSettingsInfo widgetSettings) {
+	public void show(Command onSave){
 		this.onSave = onSave;
-		this.widgetSettings = widgetSettings;
 		
-		String url = widgetSettings.getWidgetUrl();
+		String url = ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL() + "/modal.html";
 		url += url.contains("?") ? "&" : "?";
 		url += "up_id=" + "if_divEditor";
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
+		url += "#/files/" + SelectedCompanyController.getInstance().getSelectedCompanyId();
 		
 		url = url.replace("'", "\\'");
 
@@ -115,15 +112,18 @@ public class StorageFrameWidget extends RpcDialogBoxWidget {
 
 	private void onWidgetSave(String params, String additionalParams) {
 		hide();
+		
+		widgetResponse = params;
 
-		if (widgetSettings != null) {
-			widgetSettings.setParams(params);
-
-			if (onSave != null) {
-				onSave.execute();
-			}
+		if (onSave != null) {
+			onSave.execute();
 		}
 	}
+	
+	public String getItemUrl() {
+		return widgetResponse;
+	}
+	
 
 	@Override
 	public void onMessage(String command, List<String> values) {

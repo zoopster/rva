@@ -25,7 +25,7 @@ public class MediaLibraryTextBox extends Composite implements HasText, ClickHand
 	private Anchor mediaLibraryLink = new Anchor("<span style='white-space:nowrap;'>" + mediaLibraryButtonName + "</span>", true);
 
 //	private GooglePickerWidget googlePickerWidget = GooglePickerWidget.getInstance();
-	private StorageAppWidget mediaLibraryWidget = StorageAppWidget.getInstance();
+	private StorageFrameWidget mediaLibraryWidget = StorageFrameWidget.getInstance();
 
 //	private Command googlePickerSelectCommand;
 	private Command mediaLibrarySelectCommand;
