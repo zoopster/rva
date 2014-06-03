@@ -9,7 +9,7 @@ import com.google.gwt.user.client.Command;
 import com.risevision.ui.client.common.widgets.colorPicker.ColorPickerDialog;
 import com.risevision.ui.client.common.widgets.financial.InstrumentListWidget;
 import com.risevision.ui.client.common.widgets.mediaLibrary.GooglePickerWidget;
-import com.risevision.ui.client.common.widgets.mediaLibrary.StorageAppWidget;
+import com.risevision.ui.client.common.widgets.mediaLibrary.StorageFrameWidget;
 import com.risevision.ui.client.common.widgets.textStyle.TextStyleDialog;
 
 public class GadgetCommandHelper {
@@ -103,10 +103,10 @@ public class GadgetCommandHelper {
 		Command onClose = new Command() {
 			@Override
 			public void execute() {
-				javascriptCallback(callback, propertyId, StorageAppWidget.getInstance().getItemUrl(), null);
+				javascriptCallback(callback, propertyId, StorageFrameWidget.getInstance().getItemUrl(), null);
 			}
 		};
-		StorageAppWidget.getInstance().show(onClose);
+		StorageFrameWidget.getInstance().show(onClose);
 	}
 	
 	private static void onGooglePickerOpen(final JavaScriptObject callback, final String propertyId, String viewId) {

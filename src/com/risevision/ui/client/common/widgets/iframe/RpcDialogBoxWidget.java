@@ -58,7 +58,7 @@ public abstract class RpcDialogBoxWidget extends IFramePanelWidget implements Lo
 		}
 	}
 	
-	public void show(String url) {
+	protected void show(String url) {
 		this.url = url;
 		
 		if (loaded) {
