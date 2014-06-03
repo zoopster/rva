@@ -16,7 +16,6 @@ public abstract class IFramePanelWidget extends PopupPanel {
 	protected Frame iFrameElement = new Frame();
 	protected String iFrameName = "if-" + Integer.toString((int) (Math.random() * 10000)) + "-" + new Date().getTime();
 
-	
 	public IFramePanelWidget() {
 		this.add(iFrameElement);
 		
@@ -46,9 +45,9 @@ public abstract class IFramePanelWidget extends PopupPanel {
 		this.getElement().getStyle().setProperty("width", "100%");
 		this.getElement().getStyle().setProperty("height", "100%");
 		this.getElement().getStyle().setBackgroundColor("transparent");
-		
-		super.show();
+
 		showPanel(false);
+		super.show();
 	}
 	
 	private void showPanel(boolean show) {
@@ -89,4 +88,13 @@ public abstract class IFramePanelWidget extends PopupPanel {
 //		return iFrameName;
 //	}
 
+	
+	protected String getButtonString(String commandName) {
+		return "parent.rva_iFrameController_onMessageStatic(\"" + iFrameName + "\", \"" + commandName + "\");";
+	}
+
+	protected String getButtonString(String commandName, String valueName) {
+		return "parent.rva_iFrameController_onMessageStatic(\"" + iFrameName + "\", \"" + commandName + "\", " + valueName + ");";
+	}
+	
 }

@@ -5,9 +5,11 @@
 package com.risevision.ui.client.common.widgets.iframe;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.LoadEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
 import com.risevision.common.client.utils.RiseUtils;
 
-public abstract class RpcDialogBoxWidget extends IFramePanelWidget {	
+public abstract class RpcDialogBoxWidget extends IFramePanelWidget implements LoadHandler {	
 	protected static final String HTML_STRING = "<html>" +
 			"<head>" +
 			"<meta http-equiv='content-type' content='text/html; charset=UTF-8'>" +
@@ -37,18 +39,35 @@ public abstract class RpcDialogBoxWidget extends IFramePanelWidget {
 			"</html>" +
 			"";
 	
+	private String url;
+	private boolean loaded = false;
+	
 	protected void init(String externalScript) {
+		iFrameElement.addLoadHandler(this);
+		
 		String htmlString = HTML_STRING.replace("%scripts%", externalScript);
 		
 		super.init(htmlString);
 	}
 	
-	public void show(String url) {
-		if (!RiseUtils.strIsNullOrEmpty(url)) {
-			setUrlNative(iFrameElement.getElement(), url);
-		}
+	public void onLoad(LoadEvent event) {
+		loaded = true;
 		
-		show();
+		if (url != null) {
+			show(url);
+		}
+	}
+	
+	public void show(String url) {
+		this.url = url;
+		
+		if (loaded) {
+			if (!RiseUtils.strIsNullOrEmpty(url)) {
+				setUrlNative(iFrameElement.getElement(), url);
+			}
+			
+			show();
+		}
 	}
 	
 	private native void setUrlNative(Element iFrame, String url) /*-{	
