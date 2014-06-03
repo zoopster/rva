@@ -67,7 +67,6 @@ public abstract class IFramePanelWidget extends PopupPanel {
 				
 		HtmlUtils.writeHtml(iFrameElement.getElement(), htmlString);
 		
-		showPanel(true);
 	}
 
 	protected void onLoad() {
