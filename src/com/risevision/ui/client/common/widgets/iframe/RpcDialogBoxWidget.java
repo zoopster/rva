@@ -72,7 +72,6 @@ public abstract class RpcDialogBoxWidget extends IFramePanelWidget implements Lo
 	
 	private native void setUrlNative(Element iFrame, String url) /*-{	
 
-		debugger;
 		if (iFrame.contentWindow && iFrame.contentWindow.setUrl) {
 			iFrame.contentWindow.setUrl(url);
 		}
