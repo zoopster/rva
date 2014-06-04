@@ -132,6 +132,7 @@ public class ItemPreviewWidget extends SimplePanel {
 				add(textFrame);
 
 				HtmlUtils.writeHtml(textFrame.getElement(), item.getObjectData());				
+				HtmlUtils.removePageMargins(textFrame.getElement());
 			}
 //			if (item.getType().equals(PlaylistItemInfo.TYPE_GADGET) 
 //					|| item.getType().equals(PlaylistItemInfo.TYPE_URL)
