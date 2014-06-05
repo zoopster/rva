@@ -201,7 +201,7 @@ public class FormValidatorWidget extends VerticalPanel {
 //			urlValidator = RegExp.compile("^((ftp|http|https)://[\\w@.\\-\\_]+\\.[a-zA-Z]{2,}(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\[\\]\\(\\)\\_\\-/]+)*){1}$");
 		        
 			// regex where top level domain is not required
-			urlValidator = RegExp.compile("^((ftp|http|https)://[\\w@.\\-\\_]+(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\[\\]\\(\\)\\_\\-/]+)*){1}$");
+			urlValidator = RegExp.compile("^((ftp|http|https)://[\\w@.\\-\\_]+(:\\d{1,5})?(/[\\w #!:.?+=&%@!\\[\\]\\(\\)\\_\\-/]+)*){1}$");
 		        
 		}
 		Object value = getUiElementValue(formValidator);
