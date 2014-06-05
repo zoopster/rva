@@ -248,6 +248,14 @@ public class BackgroundDialog extends PopupPanel /* implements ChangeHandler */ 
 //    	style = "#ffffff url('/images/preview-opacity.png') repeat-x right top";
     	
     	if (style != null && !style.isEmpty()) {
+    		
+    		// Extract URL at the beginning and remove
+    		// Otherwise spaces in the URL cause split(" ") to fail
+    		String imageUrl = getImageUrl(style);
+    		if (!imageUrl.isEmpty()) {
+    			style = style.replace(imageUrl, "");
+    		}
+    		
 	    	String[] styleTokens = style.split(" ");
 	    	// tokens have to be in order
 	    	String token1 = null;
@@ -303,8 +311,8 @@ public class BackgroundDialog extends PopupPanel /* implements ChangeHandler */ 
 	    	
 	    	// search for url token
 	    	if (location >= 0) {
-				if (!getImageUrl(styleTokens[location]).isEmpty()) {
-			    	urlTextBox.setText(getImageUrl(styleTokens[location]));
+				if (!imageUrl.isEmpty()) {
+			    	urlTextBox.setText(imageUrl);
 					location--;
 	    		}
 	    	}
@@ -335,7 +343,7 @@ public class BackgroundDialog extends PopupPanel /* implements ChangeHandler */ 
     	}
     	
     	if (!urlTextBox.getText().isEmpty()) {
-    		properties = properties + "url('" + urlTextBox.getText().replace(" ", "+") + "') ";
+    		properties = properties + "url('" + urlTextBox.getText() + "') ";
     		
         	properties = properties + repeatListBox.getSelectedValue() + " ";
     		properties = properties + positionListBox.getSelectedValue();
