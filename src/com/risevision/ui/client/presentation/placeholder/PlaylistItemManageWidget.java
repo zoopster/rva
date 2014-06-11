@@ -271,7 +271,7 @@ public class PlaylistItemManageWidget extends PopupPanel {
 			itemManageWidget.show(playlistItem);
 		}	
 	}
-	
+		
 	public void loadStoreIframe() {
 		StoreFrameWidget.getInstance().show(new Command() {
 

@@ -6,12 +6,15 @@ package com.risevision.ui.client.presentation.placeholder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import com.allen_sauer.gwt.dnd.client.DragEndEvent;
 import com.allen_sauer.gwt.dnd.client.DragHandler;
 import com.allen_sauer.gwt.dnd.client.DragStartEvent;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -26,9 +29,17 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.risevision.common.client.info.PlaylistItemInfo;
+import com.risevision.common.client.json.JSOModel;
 import com.risevision.common.client.utils.RiseUtils;
+import com.risevision.ui.client.common.controller.ConfigurationController;
+import com.risevision.ui.client.common.controller.SelectedCompanyController;
+import com.risevision.ui.client.common.data.GadgetDataController;
+import com.risevision.ui.client.common.data.StoreDataController;
 import com.risevision.ui.client.common.dnd.FlexTableRowDragController;
 import com.risevision.ui.client.common.dnd.FlexTableRowDropController;
+import com.risevision.ui.client.common.exception.RiseAsyncCallback;
+import com.risevision.ui.client.common.info.GadgetInfo;
+import com.risevision.ui.client.common.info.GadgetsInfo;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
 import com.risevision.ui.client.presentation.common.ItemTypeSelectWidget;
 
@@ -40,6 +51,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 	public static final int ACTION_DELETE = 4;
 	public static final int ACTION_MOVEUP = 5;
 	public static final int ACTION_MOVEDOWN = 6;
+	private static final int ACTION_VEIWSTATUS = 7;
 
 	private FlexTable itemFlexTable = new FlexTable();
 	private AbsolutePanel itemTablePanel = new AbsolutePanel();
@@ -56,7 +68,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 	private int currentCommand;
 	private String currentKey;
 	
-	String[] header = new String[] {"20px", "100%", "100px", "20px", "20px", "35px", "50px"};
+	String[] header = new String[] {"20px", "100%", "60px", "80px", "20px", "20px", "35px", "50px"};
 
 	/*
 	 * Be careful with saving UI components in datastructures like this: if you
@@ -66,7 +78,11 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 	private Map<Widget, String> actionMap = new HashMap<Widget, String>();
 
 	private ArrayList<PlaylistItemInfo> playlistItems;
-
+	private static PlaceholderItemListWidget instance = null;
+	private ArrayList<GadgetInfo> gadgets = null;
+	private RpcCallBackHandlerGadgets rpcCallBackHandlerGadgets = new RpcCallBackHandlerGadgets();
+	private RpcCallBackHandlerStore rpcCallBackHandlerStore = new RpcCallBackHandlerStore();
+	
 	public int getCurrentCommand() {
 		return currentCommand;
 	}
@@ -77,6 +93,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 	
 	public PlaceholderItemListWidget() {
 		super();
+		instance = this;
 
 		add(clearListPanel);
 		add(itemTablePanel);
@@ -94,6 +111,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 			public void onClick(ClickEvent event) {
 				clearList();
 			}
+			
 		});
 		
 		// style the table
@@ -175,6 +193,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 	public void addItem(PlaylistItemInfo item, int index) {
 		playlistItems.add(index, item);
 		fixScheduleItemsId();
+		loadItemsSubscruptionStatus();
 		updateTable();
 	}
 	
@@ -246,6 +265,13 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 						}
 					}
 				}
+				
+				if (currentCommand == ACTION_VEIWSTATUS) {
+					rowIndex = RiseUtils.strToInt(currentKey, 0);
+					item = playlistItems.get(rowIndex);
+					PlaylistItemManageWidget.getInstance().show(item, rowIndex, false, new HashMap<String, Object>());
+				}
+
 			}
 		}
 	}
@@ -268,6 +294,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		this.playlistItems = playlistItems;
 		fixScheduleItemsId();
 		updateTable();
+		loadGadgetsAndSubscruptionStatus();
 	}	
 	
 	public void updateTable() {
@@ -309,6 +336,10 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		else {
 			setAction(row, col++, item.getName(), ACTION_SELECT, rowId);
 		}
+		if (item.getSubscriptionStatus() != null && !item.getSubscriptionStatus().isEmpty())
+			setAction(row, col++, item.getSubscriptionStatus(), ACTION_VEIWSTATUS, rowId); // status is loaded async from Store API 
+		else 
+			setHtml(row, col++, "&nbsp;"); //bottom border is not rendered if <TD> is empty
 		setWidget(row, col++, new Label(RiseUtils.capitalizeFirstLetter(item.getType())));
 		setAction(row, col++, "\u25B2", ACTION_MOVEUP, rowId); //arrow up
 		setAction(row, col++, "\u25BC", ACTION_MOVEDOWN, rowId); //arrow down
@@ -357,7 +388,12 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		formatCell(row, column);
 		itemFlexTable.setText(row, column, text);
 	}
-	
+
+	private void setHtml(int row, int column, String text) {
+		formatCell(row, column);
+		itemFlexTable.setHTML(row, column, text);
+	}
+
 	private void setDragHandle(int row, int column, String rowId) {
 		formatCell(row, column);
 		
@@ -391,4 +427,101 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		for (int i = 0; i < playlistItems.size(); i++)
 			playlistItems.get(i).setId(Integer.toString(i));
 	}
+
+	private void loadGadgetsAndSubscruptionStatus() {
+		if (gadgets == null) {
+			GadgetDataController controller = GadgetDataController.getInstance();
+			boolean needSharedGadgets = !SelectedCompanyController.getInstance().getSelectedCompany().isRise();
+			controller.getGadgets(getGadgetsInfo(), needSharedGadgets, rpcCallBackHandlerGadgets);
+		} else {
+			loadItemsSubscruptionStatus();
+		}
+	}
+	
+	private GadgetsInfo getGadgetsInfo(){
+		GadgetsInfo gridInfo =  new GadgetsInfo();
+		gridInfo.setCompanyId(SelectedCompanyController.getInstance().getSelectedCompanyId());
+		return gridInfo;
+	}
+
+
+	private void loadItemsSubscruptionStatus() {
+		
+		//update product code of each playlist item
+		for (int i = 0; i < playlistItems.size(); i++)
+			for (int j = 0; j < gadgets.size(); j++)
+				if (playlistItems.get(i).getObjectRef().equals(gadgets.get(j).getId()))
+					playlistItems.get(i).setProductCode(gadgets.get(j).getProductCode());
+		
+		//prepare list of product codes to request subscription status
+		HashSet<String> ids = new HashSet<>();
+		for (int i = 0; i < playlistItems.size(); i++)
+			if (playlistItems.get(i).getProductCode() != null)
+				ids.add(playlistItems.get(i).getProductCode());
+		
+		if (ids.size() > 0) {
+			String prductCodes = ids.toString().replace("[", "").replace("]", ""); //generate comma separate list
+			String storeApiURL = ConfigurationController.getInstance().getConfiguration().getStoreApiURL();
+			String CompanyId = SelectedCompanyController.getInstance().getSelectedCompanyId();
+			String url = storeApiURL + "/v1/company/" + CompanyId + "/product/status?pc=" + prductCodes + "&callback=?";
+			StoreDataController.getInstance().getSubscriptionStatus(url, rpcCallBackHandlerStore);
+	    	//callUrlNative(url);
+		}
+	}
+
+	private static void processStoreResponse(JsArray<JavaScriptObject> jso) {
+
+		if (instance == null)
+			return;
+		
+		try {
+			boolean isModified = false;
+
+			for (int i = 0; i < jso.length(); i++) {
+				JSOModel obj = (JSOModel) jso.get(i);
+				String pc = obj.get("pc");
+				String status = obj.get("status");
+				//String expiry = obj.get("expiry"); //can be used for caching
+				if (pc != null && status != null) {
+					for (int j = 0; i < instance.playlistItems.size(); j++) {
+						PlaylistItemInfo pli = instance.playlistItems.get(j);
+						if (pc.equals(pli.getProductCode())) {
+							pli.setSubscriptionStatus(status);
+							isModified = true;
+						}
+					}
+				}
+			}
+			
+			if (isModified)
+				instance.updateTable();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+	
+	class RpcCallBackHandlerGadgets extends RiseAsyncCallback<GadgetsInfo> {
+		public void onFailure() {
+		}
+
+		public void onSuccess(GadgetsInfo gadgetsInfo) {
+			if ((gadgetsInfo != null) && (gadgetsInfo.getGadgets() != null)) {
+				gadgets = gadgetsInfo.getGadgets();
+				loadItemsSubscruptionStatus();
+			}
+		}
+	}
+
+	class RpcCallBackHandlerStore extends RiseAsyncCallback<Object> {
+		public void onFailure() {
+		}
+
+		@SuppressWarnings("unchecked")
+		public void onSuccess(Object data) {
+			processStoreResponse((JsArray<JavaScriptObject>) data);
+		}
+	}
+
 }

@@ -17,9 +17,11 @@ import com.risevision.ui.server.utils.ServerUtils;
 @PersistenceCapable
 public class PersistentConfigurationInfo implements Serializable {
 
-	private static final String SERVER_URL = "https://rvacore-test.appspot.com";
-//	private static final String SERVER_URL = "https://rvacore-test2.appspot.com/";
+//	private static final String SERVER_URL = "https://rvacore-test.appspot.com";
+	private static final String SERVER_URL = "https://rvacore-test2.appspot.com";
 //	private static final String SERVER_URL = "https://rvaserver2.appspot.com";
+	
+	private static final String STORE_API_URL = "https://store-dot-rvacore-test2.appspot.com";
 	
 	private static final String REQUEST_TOKEN_URL = SERVER_URL + "/_ah/OAuthGetRequestToken";
 	private static final String AUTHORIZE_TOKEN_URL = SERVER_URL + "/_ah/OAuthAuthorizeToken";
@@ -110,6 +112,8 @@ public class PersistentConfigurationInfo implements Serializable {
 	@Persistent
 	private String storeURL;
 	
+	private String storeApiURL;
+
 	public static final String ENTITY_KEY = "Config";
 
 	public PersistentConfigurationInfo() {
@@ -133,6 +137,7 @@ public class PersistentConfigurationInfo implements Serializable {
 		gcsAccountEmail = GCS_ACCOUNT_EMAIL;
 		financialServerURL = FINANCIAL_SERVER_URL;
 		storeURL = STORE_URL;
+		storeApiURL = STORE_API_URL;
 	}
 	
 	public String getEntityKey() {
@@ -275,6 +280,14 @@ public class PersistentConfigurationInfo implements Serializable {
 		this.financialServerURL = financialServerURL;
 	}
 
+	public String getStoreApiURL() {
+		return storeApiURL;
+	}
+
+	public void setStoreApiURL(String storeApiURL) {
+		this.storeApiURL = storeApiURL;
+	}
+
 	public ConfigurationInfo getConfigurationInfo() {
 		ConfigurationInfo config = new ConfigurationInfo();
 		
@@ -292,6 +305,7 @@ public class PersistentConfigurationInfo implements Serializable {
 		config.setRequestTokenURL(this.getRequestTokenURL());	
 		config.setAuthorizeTokenURL(this.getAuthorizeTokenURL());	
 		config.setAccessTokenURL(this.getAccessTokenURL());	
+		config.setStoreApiURL(this.getStoreApiURL());	
 		
 //		config.setAwsAccessKeyId(this.getAwsAccessKeyId());
 		// Secret Access Key is not sent to the Client Side

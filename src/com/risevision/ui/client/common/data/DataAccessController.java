@@ -80,7 +80,7 @@ public class DataAccessController {
 		return messageURL;
 	}-*/;	
 				
-	private static native void getDataNative(String url, String callbackName, DataResponseBase response) /*-{
+	public static native void getDataNative(String url, String callbackName, DataResponseBase response) /*-{
 //		debugger;
 		
 		var instance = this;

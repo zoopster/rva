@@ -30,6 +30,8 @@ public class ConfigurationInfo implements Serializable  {
 	private String gcsAccountEmail;
 	
 	private String financialServerURL;
+
+	private String storeApiURL;
 	
 	public String getRiseId() {
 		return riseId;
@@ -175,4 +177,12 @@ public class ConfigurationInfo implements Serializable  {
 		this.storeURL = storeURL;
 	}
 	
+	public String getStoreApiURL() {
+		return storeApiURL;
+	}
+	
+	public void setStoreApiURL(String storeApiURL) {
+		this.storeApiURL = storeApiURL;
+	}
+
 }
