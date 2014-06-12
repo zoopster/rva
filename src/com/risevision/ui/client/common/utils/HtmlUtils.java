@@ -17,16 +17,5 @@ public class HtmlUtils {
 		    el.document.close();
 //		} catch (err) {}
 	}-*/;
-
-	public static native void removePageMargins(Element myFrame)  /*-{
-//		try {
-//			debugger; 
-			
-			var el = (myFrame.contentWindow) ? myFrame.contentWindow : (myFrame.contentDocument.document) ? myFrame.contentDocument.document : myFrame.contentDocument;
-		    el.document.body.style["padding"] = 0;
-		    el.document.body.style["margin"] = 0;
-		    
-//		} catch (err) {}
-	}-*/;
 	
 }
