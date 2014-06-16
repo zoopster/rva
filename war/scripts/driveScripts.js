@@ -2,7 +2,7 @@
 // Use of this software is governed by the GPLv3 license
 // (reproduced in the LICENSE file).
 
-var clientId = "452091732215-h98qa54ced2irncbma20t4binh73hpdr.apps.googleusercontent.com";
+var clientId = "614513768474.apps.googleusercontent.com";
 //var clientId = "726689182011.apps.googleusercontent.com";
 
 var scope = "https://www.googleapis.com/auth/drive";
