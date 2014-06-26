@@ -4,15 +4,12 @@
 
 package com.risevision.ui.client.gadget;
 
+import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -31,7 +28,12 @@ import com.risevision.ui.client.common.widgets.grid.FormGridWidget;
 import com.risevision.ui.client.common.widgets.grid.ScrollingGridWidget;
 
 public class GadgetSelectWidget extends Composite {
-	private String classId = "itemTypeSelect_" + System.currentTimeMillis();
+	
+	public enum Content {
+		SELECT_GADGET_BY_URL,
+		SELECT_GADGET_FROM_SHARED,
+		SELECT_GADGET_FROM_COMPANY
+	}
 
 	//private static GadgetSelectWidget instance;
 	//RPC
@@ -43,10 +45,6 @@ public class GadgetSelectWidget extends Composite {
 	private FormValidatorWidget formValidator = new FormValidatorWidget();
 	private DeckPanel contentPanel = new DeckPanel();
 	private StatusBoxWidget statusBox = new StatusBoxWidget();
-	private HorizontalPanel typePanel = new HorizontalPanel();
-	private RadioButton companySelection = new RadioButton(classId, "Your Gadgets");
-	private RadioButton sharedSelection = new RadioButton(classId, "Shared Gadgets");
-	private RadioButton urlSelection = new RadioButton(classId, "By URL");
 	private ActionsWidget actionWidget;
 
 	private GadgetTypeListBox gadgetType = new GadgetTypeListBox();
@@ -56,22 +54,34 @@ public class GadgetSelectWidget extends Composite {
 	private ScrollingGridWidget sharedGadgetGrid;
 	private Command grCommand;
 	private Command selectCommand;
+	private Content currentContent = null;
 
 	public GadgetSelectWidget(ActionsWidget actionWidget) {
 		this.actionWidget = actionWidget;
 
 		initGridWidget();
 		
-		typePanel.add(sharedSelection);
-		typePanel.add(new HTML("&nbsp;&nbsp;"));
-		typePanel.add(companySelection);
-		typePanel.add(new HTML("&nbsp;&nbsp;"));
-		typePanel.add(urlSelection);
-		
-		contentPanel.add(sharedGadgetGrid);
-		contentPanel.add(companyGadgetGrid);
+		VerticalPanel sharedGadgetPanel = new VerticalPanel();
+		Label sharedGadgetsLabel = new Label("Content Shared with You");
+		sharedGadgetsLabel.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		sharedGadgetsLabel.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+		sharedGadgetPanel.add(sharedGadgetsLabel);		
+		sharedGadgetPanel.add(sharedGadgetGrid);
+		contentPanel.add(sharedGadgetPanel);
 
-		SimplePanel urlPanel = new SimplePanel();
+		VerticalPanel companyGadgetPanel = new VerticalPanel();
+		Label companyGadgetsLabel = new Label("Your Content");
+		companyGadgetsLabel.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		companyGadgetsLabel.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+		companyGadgetPanel.add(companyGadgetsLabel);
+		companyGadgetPanel.add(companyGadgetGrid);
+		contentPanel.add(companyGadgetPanel);
+
+		VerticalPanel urlPanel = new VerticalPanel();
+		Label byUrlGadgetsLabel = new Label("Content by URL");
+		byUrlGadgetsLabel.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		byUrlGadgetsLabel.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+		urlPanel.add(byUrlGadgetsLabel);
 		FormGridWidget urlGrid = new FormGridWidget(2, 2);
 		urlGrid.addStyleName("rdn-VerticalSpacer");
 
@@ -85,14 +95,12 @@ public class GadgetSelectWidget extends Composite {
 		contentPanel.showWidget(0);
 		
 		mainPanel.add(statusBox);
-		mainPanel.add(typePanel);
 		mainPanel.add(formValidator);
 		mainPanel.add(contentPanel);
 		
 //		mainPanel.setCellHeight(contentPanel, "210px");
 		
 		styleControls();
-		initActions();
 		initWidget(mainPanel);
 	}
 	
@@ -101,7 +109,6 @@ public class GadgetSelectWidget extends Composite {
 		
 		gadgetType.addStyleName("rdn-ListBoxMedium");
 		
-		typePanel.getElement().getStyle().setPaddingBottom(6, Unit.PX);
 	}
 
 //	public static GadgetSelectWidget getInstance() {
@@ -114,33 +121,6 @@ public class GadgetSelectWidget extends Composite {
 //		return instance;
 //	}	
 	
-	private void initActions() {
-		ValueChangeHandler<Boolean> radioSelected = new ValueChangeHandler<Boolean>() {
-			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				formValidator.removeValidationElement(urlTextBox);
-				actionWidget.setVisible(false, "Save");
-				
-				if (event.getSource() == sharedSelection) {
-					contentPanel.showWidget(0);
-				}
-				else if (event.getSource() == companySelection) {
-					contentPanel.showWidget(1);
-				}
-				else if (event.getSource() == urlSelection) {
-					formValidator.addValidationElement(urlTextBox, "URL", FormValidatorInfo.requiredFieldValidator);
-					actionWidget.setVisible(true, "Save");
-					
-					contentPanel.showWidget(2);
-				}
-			}
-		};
-		
-		sharedSelection.addValueChangeHandler(radioSelected);
-		companySelection.addValueChangeHandler(radioSelected);
-		urlSelection.addValueChangeHandler(radioSelected);
-		sharedSelection.setValue(true, true);
-	}
-
 	private void initGridWidget(){
 		grCommand = new Command() {
 			public void execute() {			
@@ -177,9 +157,6 @@ public class GadgetSelectWidget extends Composite {
 		urlTextBox.setText("http://");
 		loadGridDataRPC();
 		
-		companySelection.setValue(false);
-		urlSelection.setValue(false);
-		sharedSelection.setValue(true, true);
 	}
 
 //	protected void onLoad() {
@@ -194,8 +171,24 @@ public class GadgetSelectWidget extends Composite {
 //		actionWidget.setVisible(false, "Okay");
 //	}
 	
-	public void show() {
-		actionWidget.setVisible(urlSelection.getValue(), "Save");
+	public void show(final Content content) {
+		formValidator.removeValidationElement(urlTextBox);
+		actionWidget.setVisible(false, "Save");
+
+		switch (content) {
+		case SELECT_GADGET_BY_URL:
+			actionWidget.setVisible(true, "Save");
+			formValidator.addValidationElement(urlTextBox, "URL", FormValidatorInfo.requiredFieldValidator);
+			contentPanel.showWidget(2);
+			break;
+		case SELECT_GADGET_FROM_COMPANY:
+			contentPanel.showWidget(1);
+			break;
+		case SELECT_GADGET_FROM_SHARED:
+			contentPanel.showWidget(0);
+			break;
+		}
+		setCurrentContent(content);
 		actionWidget.setVisible(true, "Cancel");
 	}
 	
@@ -224,7 +217,7 @@ public class GadgetSelectWidget extends Composite {
 	}
 
 	public GadgetInfo getCurrentGadget(){
-		if (urlSelection.getValue()) {
+		if (Content.SELECT_GADGET_BY_URL.equals(this.currentContent)) {
 			if (formValidator.validate()) {
 				GadgetInfo gadgetInfo = new GadgetInfo();
 				gadgetInfo.setName("Custom URL");
@@ -240,7 +233,7 @@ public class GadgetSelectWidget extends Composite {
 		else {
 			String currentKey;
 			GadgetsInfo gadgets;
-			if (companySelection.getValue()) {
+			if (Content.SELECT_GADGET_FROM_COMPANY.equals(this.currentContent)) {
 				currentKey = companyGadgetGrid.getCurrentKey();
 				gadgets = (GadgetsInfo) companyGadgetGrid.getGridInfo();
 			}
@@ -261,7 +254,16 @@ public class GadgetSelectWidget extends Composite {
 	}
 
 	private void processGridCommand(){
-		int command = companySelection.getValue() ? companyGadgetGrid.getCurrentCommand() : sharedGadgetGrid.getCurrentCommand();
+		int command;
+		if (Content.SELECT_GADGET_FROM_COMPANY.equals(this.currentContent)) {
+			command = companyGadgetGrid.getCurrentCommand();
+		}
+		else if (Content.SELECT_GADGET_FROM_SHARED.equals(this.currentContent)) {
+			command = sharedGadgetGrid.getCurrentCommand();
+		}
+		else {
+			return;
+		}
 					
 		switch (command) {
 		case ScrollingGridInfo.SELECTACTION:
@@ -272,7 +274,7 @@ public class GadgetSelectWidget extends Composite {
 		case ScrollingGridInfo.SEARCHACTION:
 		case ScrollingGridInfo.PAGEACTION:
 		case ScrollingGridInfo.SORTACTION:
-			if (companySelection.getValue()) {
+			if (Content.SELECT_GADGET_FROM_COMPANY.equals(this.currentContent)) {
 				loadCompanyGridDataRPC();
 			}
 			else {
@@ -322,7 +324,7 @@ public class GadgetSelectWidget extends Composite {
 				}
 			}
 			else {
-				companySelection.setValue(true, true);
+//				companySelection.setValue(true, true);
 			}
 		}
 	}
@@ -352,8 +354,17 @@ public class GadgetSelectWidget extends Composite {
 		}
 
 		gridInfo.setCompanyId(SelectedCompanyController.getInstance().getSelectedCompanyId());
+		gridInfo.setNotRiseShared(true);
 		
 		return gridInfo;
+	}
+
+	public Content getCurrentContent() {
+		return currentContent;
+	}
+
+	public void setCurrentContent(Content currentContent) {
+		this.currentContent = currentContent;
 	}
 
 	class RpcCompanyCallBackHandler extends RiseAsyncCallback<GadgetsInfo> {

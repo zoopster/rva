@@ -19,6 +19,7 @@ public class GadgetInfo implements Serializable {
 	
 	private String id;
 	private String name;
+	private String productCode;
 	private String type = GadgetType.GADGET;
 	private String url;
 	private String uiUrl;
@@ -158,6 +159,14 @@ public class GadgetInfo implements Serializable {
 
 	public void setHelpUrl(String helpUrl) {
 		this.helpUrl = helpUrl;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 
 

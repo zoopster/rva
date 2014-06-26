@@ -12,6 +12,7 @@ public class ConfigurationInfo implements Serializable  {
 	private String serverURL;
 	private String viewerURL;
 	private String mediaLibraryURL;
+	private String storeURL;
 	private String windowsInstallerURL;
 	private String linuxInstallerURL;
 	private String macInstallerURL;
@@ -164,6 +165,14 @@ public class ConfigurationInfo implements Serializable  {
 	
 	public void setFinancialServerURL(String financialServerURL) {
 		this.financialServerURL = financialServerURL;
+	}
+
+	public String getStoreURL() {
+		return storeURL;
+	}
+
+	public void setStoreURL(String storeURL) {
+		this.storeURL = storeURL;
 	}
 	
 }

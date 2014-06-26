@@ -4,6 +4,9 @@
 
 package com.risevision.ui.client.presentation.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -14,6 +17,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.risevision.common.client.info.PlaylistItemInfo;
 import com.risevision.common.client.utils.RiseUtils;
+import com.risevision.ui.client.gadget.GadgetSelectWidget;
 import com.risevision.ui.client.presentation.placeholder.PlaceholderManageWidget;
 
 public class ItemTypeSelectWidget extends Anchor {
@@ -46,21 +50,66 @@ public class ItemTypeSelectWidget extends Anchor {
 						pasteItem();
 					}
 				});
+
+		final MenuItem contentItem = new MenuItem("Content", true, 
+				new Command() {
+					@Override
+					public void execute() {
+						final HashMap<String, Object> data = new HashMap<String, Object>();
+						data.put("via", PlaceholderManageWidget.VIA_STORE);
+						selectItem(PlaylistItemInfo.TYPE_GADGET, data);
+					}
+				});
 		
-		popupMenuBar.addItem(copyItem);
+		final MenuItem byUrlItem = new MenuItem("Content by URL", true, 
+				new Command() {
+					@Override
+					public void execute() {
+						final HashMap<String, Object> data = new HashMap<String, Object>();
+						data.put("via", GadgetSelectWidget.Content.SELECT_GADGET_BY_URL);
+						selectItem(PlaylistItemInfo.TYPE_GADGET, data);
+					}
+				});
+
+		final MenuItem byCompanyItem = new MenuItem("Your Content", true, 
+				new Command() {
+					@Override
+					public void execute() {
+						final HashMap<String, Object> data = new HashMap<String, Object>();
+						data.put("via", GadgetSelectWidget.Content.SELECT_GADGET_FROM_COMPANY);
+						selectItem(PlaylistItemInfo.TYPE_GADGET, data);
+					}
+				});
+
+		final MenuItem sharedGadgetsItem = new MenuItem("Content Shared with You", true, 
+				new Command() {
+					@Override
+					public void execute() {
+						final HashMap<String, Object> data = new HashMap<String, Object>();
+						data.put("via", GadgetSelectWidget.Content.SELECT_GADGET_FROM_SHARED);
+						selectItem(PlaylistItemInfo.TYPE_GADGET, data);
+					}
+				});
+
 		copyItem.setEnabled(enableCopy);
-		
+				
+		popupMenuBar.addItem(copyItem);
 		popupMenuBar.addItem(pasteItem);
-		
 		popupMenuBar.addSeparator();
 		
-		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_GADGET), PlaylistItemInfo.TYPE_GADGET);
+		popupMenuBar.addItem(contentItem);
+		
 		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_TEXT), PlaylistItemInfo.TYPE_TEXT);
 		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_PRESENTATION), PlaylistItemInfo.TYPE_PRESENTATION);
 		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_IMAGE), PlaylistItemInfo.TYPE_IMAGE);
 		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_VIDEO), PlaylistItemInfo.TYPE_VIDEO);
 		addMenuOption(PlaylistItemInfo.TYPE_HTML, PlaylistItemInfo.TYPE_HTML);
 		
+		popupMenuBar.addSeparator();
+		popupMenuBar.addItem(byUrlItem);
+		popupMenuBar.addItem(byCompanyItem);
+		popupMenuBar.addItem(sharedGadgetsItem);
+
     	popupMenuBar.setVisible(true);
     	menuPanel.add(popupMenuBar);
     	
@@ -77,23 +126,22 @@ public class ItemTypeSelectWidget extends Anchor {
 			}
 		});
 	}
-	
+
 	private void addMenuOption(String text, final String value) {
 		MenuItem menuItem = new MenuItem(text, true, 
 				new Command() {
 					@Override
 					public void execute() {
-						selectItem(value);
+						selectItem(value, new HashMap<String, Object>());
 					}
 				});
 		
 		popupMenuBar.addItem(menuItem);
 	}
 	
-	private void selectItem(String type) {
-		PlaceholderManageWidget.getInstance().addItem(type, row);
-		
+	private void selectItem(String type, Map<String, Object> data) {
 		menuPanel.hide();
+		PlaceholderManageWidget.getInstance().addItem(type, row, data);		
 	}
 	
 	private void copyItem() {

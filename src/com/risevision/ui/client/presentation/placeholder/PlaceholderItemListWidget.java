@@ -201,7 +201,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 				if (currentCommand == ACTION_SELECT) {
 					rowIndex = RiseUtils.strToInt(currentKey, 0);
 					item = playlistItems.get(rowIndex);
-					PlaylistItemManageWidget.getInstance().show(item, rowIndex);
+					PlaylistItemManageWidget.getInstance().show(item, rowIndex, false, new HashMap<String, Object>());
 				}
 
 //				if (currentCommand == ACTION_ADD) {

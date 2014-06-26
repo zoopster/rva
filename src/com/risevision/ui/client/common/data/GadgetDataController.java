@@ -11,6 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.risevision.common.client.json.JSOModel;
 import com.risevision.core.api.attributes.CommonAttribute;
 import com.risevision.core.api.attributes.GadgetAttribute;
+import com.risevision.ui.client.common.controller.ConfigurationController;
 import com.risevision.ui.client.common.info.GadgetInfo;
 import com.risevision.ui.client.common.info.GadgetsInfo;
 
@@ -28,7 +29,8 @@ public class GadgetDataController extends DataControllerBase {
 			GadgetAttribute.CATEGORY,
 			GadgetAttribute.DESCRIPTION,
 			GadgetAttribute.THUMBNAIL_URL,
-			GadgetAttribute.SCREENSHOT_URL
+			GadgetAttribute.SCREENSHOT_URL,
+			GadgetAttribute.PRODUCT_CODE
 //			DisplayAttribute.STATUS
 			};
 	
@@ -41,10 +43,11 @@ public class GadgetDataController extends DataControllerBase {
 		}
 		return (GadgetDataController) instance;
 	}
-	
+
 	public GadgetDataController() {
 		headerEntries.add(new HeaderEntry(GadgetAttribute.ID));
 		headerEntries.add(new HeaderEntry(GadgetAttribute.NAME));
+		headerEntries.add(new HeaderEntry(GadgetAttribute.PRODUCT_CODE));
 		headerEntries.add(new HeaderEntry(GadgetAttribute.GADGET_TYPE));
 		headerEntries.add(new HeaderEntry(GadgetAttribute.URL));
 		headerEntries.add(new HeaderEntry(GadgetAttribute.UI_URL));
@@ -80,8 +83,14 @@ public class GadgetDataController extends DataControllerBase {
 	
 	public void getGadgets(GadgetsInfo gadgetsInfo, boolean sharedGadgets, AsyncCallback<GadgetsInfo> callback) {
 		String action;
+		String customQuery = createSearchString(gadgetsInfo.getSearchFor());
 		if (sharedGadgets) {
 			action = "/company/" + gadgetsInfo.getCompanyId() + "/sharedgadgets";	
+			String notRiseFilterString = createNotRiseFilterString(gadgetsInfo.isNotRiseShared());
+			if (customQuery.length() > 0 && notRiseFilterString.length() > 0) {
+				notRiseFilterString = "and" + notRiseFilterString;
+			}
+			customQuery += notRiseFilterString;				
 		}
 		else {
 			action = "/company/" + gadgetsInfo.getCompanyId() + "/gadgets";
@@ -89,14 +98,29 @@ public class GadgetDataController extends DataControllerBase {
 		 
 		String method = "GET"; 
 	
-		String customQuery = createSearchString(gadgetsInfo.getSearchFor());
+		customQuery += createProductCodeSearchString(gadgetsInfo.getProductCode());
 		String query = createQuery(customQuery, gadgetsInfo, gadgetsSearchCategories);
-		
 		GadgetsDataResponse response = new GadgetsDataResponse(gadgetsInfo, callback);
 		
 		getData(action, method, query, response);
 	}
+
+	private String createNotRiseFilterString(boolean isNotRiseShared) {
+		String query = "";
+		if (isNotRiseShared) {
+			query += " (" + GadgetAttribute.COMPANY_ID + " != '" + ConfigurationController.getInstance().getConfiguration().getRiseId() + "') ";
+		}
+		return query;
+	}
 	
+	private String createProductCodeSearchString(String productCode) {
+		String query = "";
+		if (productCode != null) {
+			query += " (" + GadgetAttribute.PRODUCT_CODE + " = '" + productCode + "') ";
+		}
+		return query;
+	}
+
 	private String createSearchString(String searchFor) {
 		String query = "";
 		
@@ -124,6 +148,7 @@ public class GadgetDataController extends DataControllerBase {
 			
 			gadget.setId(column.get(headerEntries.get(j++).col).get("v"));
 			gadget.setName(column.get(headerEntries.get(j++).col).get("v"));
+			gadget.setProductCode(column.get(headerEntries.get(j++).col).get("v"));
 			gadget.setType(column.get(headerEntries.get(j++).col).get("v"));
 			gadget.setUrl(column.get(headerEntries.get(j++).col).get("v"));
 			gadget.setUiUrl(column.get(headerEntries.get(j++).col).get("v"));
