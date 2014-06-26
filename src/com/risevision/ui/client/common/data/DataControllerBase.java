@@ -81,6 +81,7 @@ public abstract class DataControllerBase {
 			else {
 				query += createSearchString(searchFor, searchCategories);
 			}
+			query += customQuery.isEmpty() ? "" : "and ";
 		}
 		else {
 			query += customQuery.isEmpty() ? "" : "where ";

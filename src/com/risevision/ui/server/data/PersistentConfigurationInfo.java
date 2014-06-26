@@ -63,6 +63,8 @@ public class PersistentConfigurationInfo implements Serializable {
     
     public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2-test.appspot.com";
 //    public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2.appspot.com";
+
+    private static final String STORE_URL = "http://192.254.220.36/~rvi/store-ci/";
 	
 	@Persistent
 	@PrimaryKey
@@ -104,6 +106,9 @@ public class PersistentConfigurationInfo implements Serializable {
 	
 	@Persistent
 	private String financialServerURL;
+
+	@Persistent
+	private String storeURL;
 	
 	public static final String ENTITY_KEY = "Config";
 
@@ -127,6 +132,7 @@ public class PersistentConfigurationInfo implements Serializable {
 		awsSecretAccessKey = AWS_SECRET_ACCESS_KEY;
 		gcsAccountEmail = GCS_ACCOUNT_EMAIL;
 		financialServerURL = FINANCIAL_SERVER_URL;
+		storeURL = STORE_URL;
 	}
 	
 	public String getEntityKey() {
@@ -294,8 +300,17 @@ public class PersistentConfigurationInfo implements Serializable {
 		config.setGcsAccountEmail(this.getGcsAccountEmail());
 		
 		config.setFinancialServerURL(this.getFinancialServerURL());
+		config.setStoreURL(this.getStoreURL());
 		
 		return config;
+	}
+
+	public String getStoreURL() {
+		return storeURL;
+	}
+
+	public void setStoreURL(String storeURL) {
+		this.storeURL = storeURL;
 	}
 }
 

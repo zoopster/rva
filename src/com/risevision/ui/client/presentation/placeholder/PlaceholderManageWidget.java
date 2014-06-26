@@ -5,6 +5,9 @@
 package com.risevision.ui.client.presentation.placeholder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -34,10 +37,12 @@ import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.NumericBoxWidget;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
+import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.TooltipLabelWidget;
 import com.risevision.ui.client.common.widgets.TransitionWidget;
 import com.risevision.ui.client.common.widgets.UnitLabelWidget;
 import com.risevision.ui.client.common.widgets.background.BackgroundWidget;
+import com.risevision.ui.client.common.widgets.store.StoreFrameWidget;
 import com.risevision.ui.client.common.widgets.timeline.TimelineWidget;
 import com.risevision.ui.client.display.DistributionWidget;
 import com.risevision.ui.client.gadget.GadgetSelectWidget;
@@ -48,7 +53,7 @@ import com.risevision.ui.client.presentation.common.PlaceholderSelectListBox;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class PlaceholderManageWidget extends PopupPanel {
-
+	public static String VIA_STORE = "via_store";
 	private static PlaceholderManageWidget instance;
 	private PlaceholderInfo placeholder;
 	private PresentationInfo presentation;
@@ -102,7 +107,10 @@ public class PlaceholderManageWidget extends PopupPanel {
 	private boolean isInsert = false;
 	private PlaylistItemInfo insertItem;
 	private int insertIndex;
+	private Map<String, Object> insertData;
 	
+    public final static Logger LOGGER = Logger.getLogger(PlaceholderManageWidget.class.toString());
+    
 	public PlaceholderManageWidget() {
 		super(false, false); //set auto-hide and modal
 		add(mainPanel);
@@ -225,7 +233,7 @@ public class PlaceholderManageWidget extends PopupPanel {
 			public void execute() {
 				if (contentDeckPanel.getVisibleWidget() == 0 && placeholder.getPlaylistItems().size() == 1) {
 					listWidget.deleteItem(0);
-					showSelectPanel(false);
+					showSelectPanel(false, null);
 				}
 			}
 		};		
@@ -308,12 +316,18 @@ public class PlaceholderManageWidget extends PopupPanel {
 	}
 	
 	private void contentSelected(){
-		GadgetInfo gadget = gadgetSelectWidget.getCurrentGadget();
+		GadgetInfo gadget = null;
+		if (VIA_STORE.equals(this.insertData.get("via"))) {
+			gadget = StoreFrameWidget.getInstance().getSelectedGadget();			
+		}
+		else {
+			gadget = gadgetSelectWidget.getCurrentGadget();
+		}
 		
 		if (gadget != null) {
 			// add Gadget here
 	
-			showSelectPanel(false);
+			showSelectPanel(false, null);
 			formValidator.clear();
 		}
 		
@@ -321,12 +335,13 @@ public class PlaceholderManageWidget extends PopupPanel {
 		listWidget.updateTable();
 	}
 	
-	private void showSelectPanel(boolean show) {
+	public void showSelectPanel(boolean show, GadgetSelectWidget.Content content) {
+		
 		actionWidget.setVisible(!show, "Save");
 		actionWidget.setVisible(show, "Cancel");
 		
 		contentDeckPanel.showWidget(show ? 0 : 1);
-		if (show) gadgetSelectWidget.show();	
+		if (show) gadgetSelectWidget.show(content);	
 	}
 	
 	private void hideSelectorList(boolean hide) {
@@ -423,7 +438,8 @@ public class PlaceholderManageWidget extends PopupPanel {
 		setPopupPosition(left, top);
 	}
 	
-	public void addItem(String type, int itemIndex) {
+	public void addItem(String type, int itemIndex, Map<String, Object> data) {
+		StatusBoxWidget.getInstance().clear();
 		PlaylistItemInfo playlistItem = new PlaylistItemInfo();
 		playlistItem.setType(type);
 		playlistItem.setName(RiseUtils.capitalizeFirstLetter(type) + " Item");
@@ -437,7 +453,7 @@ public class PlaceholderManageWidget extends PopupPanel {
 			playlistItem.setPlayUntilDone(true);
 		}
 		
-		insertItem(playlistItem, itemIndex);
+		insertItem(playlistItem, itemIndex, data);
 	}
 	
 	public void copyItem(int itemIndex) {
@@ -448,15 +464,16 @@ public class PlaceholderManageWidget extends PopupPanel {
 	
 	public void pasteItem(int itemIndex) {
 		if (copiedPlaylistItem != null) {
-			insertItem(copiedPlaylistItem.copy(), itemIndex);	
+			insertItem(copiedPlaylistItem.copy(), itemIndex, new HashMap<String, Object>());	
 		}
 	}
 	
-	private void insertItem(PlaylistItemInfo playlistItem, int itemIndex) {
+	private void insertItem(PlaylistItemInfo playlistItem, int itemIndex, Map<String, Object> data) {
 		isInsert = true;
 		
 		this.insertItem = playlistItem;
 		this.insertIndex = itemIndex;
+		this.insertData = data;
 		
 		doActionSave();
 	}
@@ -472,7 +489,7 @@ public class PlaceholderManageWidget extends PopupPanel {
 			bindItem();
 		}
 		else {
-			playlistItemWidget.show(insertItem, insertIndex, true);
+			playlistItemWidget.show(insertItem, insertIndex, true, this.insertData);
 		}
 	}
 
@@ -507,17 +524,21 @@ public class PlaceholderManageWidget extends PopupPanel {
 			if (PlaylistItemInfo.TYPE_GADGET.equals(placeholder.getPlaylistItems().get(0).getType()) && 
 					(placeholder.getPlaylistItems().get(0).getObjectData() == null || 
 							placeholder.getPlaylistItems().get(0).getObjectData().isEmpty())){
-				showSelectPanel(true);
+				if (VIA_STORE.equals(this.insertData.get("via"))) {
+					this.loadStoreIframe();
+				}
+				else {
+					showSelectPanel(true, (GadgetSelectWidget.Content) this.insertData.get("via"));					
+				}
 			}
 			else {
-				showSelectPanel(false);
-//				listWidget.setVisible(false);
+				showSelectPanel(false, null);
 
 				itemManageWidget.show(placeholder.getPlaylistItems().get(0));
 			}
 		}
 		else {
-			showSelectPanel(false);
+			showSelectPanel(false, null);
 			itemManageWidget.hide();
 			
 //			listWidget.setVisible(true);
@@ -665,6 +686,24 @@ public class PlaceholderManageWidget extends PopupPanel {
 		}
 	}
 	
+	public void loadStoreIframe() {
+		StoreFrameWidget.getInstance().show(new Command() {
+
+			@Override
+			public void execute() {
+				contentSelected();
+			}
+			
+		}, new Command() {
+			public void execute() {
+				if (placeholder.getPlaylistItems().size() == 1) {
+					listWidget.deleteItem(0);
+					showSelectPanel(false, null);
+				}
+			}
+		});
+	}
+
 //	private void doActionCancel() {
 //		hide();
 //		if (onChange != null)

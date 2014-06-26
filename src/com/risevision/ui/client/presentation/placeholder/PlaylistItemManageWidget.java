@@ -4,6 +4,8 @@
 
 package com.risevision.ui.client.presentation.placeholder;
 
+import java.util.Map;
+
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -12,6 +14,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.risevision.common.client.info.PlaylistItemInfo;
@@ -22,15 +25,18 @@ import com.risevision.ui.client.common.widgets.DurationWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.TooltipLabelWidget;
+import com.risevision.ui.client.common.widgets.store.StoreFrameWidget;
 import com.risevision.ui.client.common.widgets.timeline.TimelineWidget;
 import com.risevision.ui.client.display.DistributionWidget;
 import com.risevision.ui.client.gadget.GadgetSelectWidget;
+import com.risevision.ui.client.gadget.GadgetSelectWidget.Content;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class PlaylistItemManageWidget extends PopupPanel {
-	private static PlaylistItemManageWidget instance;
+
+    private static PlaylistItemManageWidget instance;
 	
 	private PlaylistItemInfo playlistItem;
 	private boolean itemIsNew;
@@ -60,6 +66,8 @@ public class PlaylistItemManageWidget extends PopupPanel {
 	private Command onChange, itemSaved;
 	private ActionsWidget actionWidget = new ActionsWidget();
 	private GadgetSelectWidget gadgetSelectWidget = new GadgetSelectWidget(actionWidget);
+
+	private String insertVia = null;
 
 	public PlaylistItemManageWidget() {
 		super(false, false); //set auto-hide and modal
@@ -166,11 +174,19 @@ public class PlaylistItemManageWidget extends PopupPanel {
 		};
 	}
 	
-	private void contentSelected(){
-		GadgetInfo gadget = gadgetSelectWidget.getCurrentGadget();
+	private void contentSelected() {
+		GadgetInfo gadget = null;
+		show();
+		
+		if (PlaceholderManageWidget.VIA_STORE.equals(this.insertVia)) {
+			gadget = StoreFrameWidget.getInstance().getSelectedGadget();			
+		}
+		else {
+			gadget = gadgetSelectWidget.getCurrentGadget();
+		}
 		
 		if (gadget != null) {
-			showSelectPanel(false);
+			showSelectPanel(false, null);
 			formValidator.clear();
 		}
 		
@@ -178,11 +194,12 @@ public class PlaylistItemManageWidget extends PopupPanel {
 		bindData();
 	}
 	
-	private void showSelectPanel(boolean show) {
+	private void showSelectPanel(boolean show, GadgetSelectWidget.Content content) {
+		UIObject.setVisible(titleLabel.getElement(), !show);
 		actionWidget.setVisible(!show, "Save");
 		
 		contentDeckPanel.showWidget(show ? 0 : 1);
-		if (show) gadgetSelectWidget.show();	
+		if (show) gadgetSelectWidget.show(content);	
 	}
 	
 	public static PlaylistItemManageWidget getInstance() {
@@ -216,12 +233,12 @@ public class PlaylistItemManageWidget extends PopupPanel {
 //		show(null, itemType, itemIndex);
 //	}
 	
-	public void show(PlaylistItemInfo playlistItem, int itemIndex){
-		show(playlistItem, itemIndex, false);	
-	}
+//	public void show(PlaylistItemInfo playlistItem, int itemIndex){
+//		show(playlistItem, itemIndex, false);	
+//	}
 	
-	public void show(PlaylistItemInfo playlistItem, int itemIndex, boolean itemIsNew){
-		super.show();
+	public void show(PlaylistItemInfo playlistItem, int itemIndex, boolean itemIsNew, Map<String, Object> data){
+		super.hide();
 
 		this.itemIsNew = itemIsNew;
 		
@@ -233,16 +250,41 @@ public class PlaylistItemManageWidget extends PopupPanel {
 		if (PlaylistItemInfo.TYPE_GADGET.equals(playlistItem.getType()) && 
 				(playlistItem.getObjectData() == null || 
 						playlistItem.getObjectData().isEmpty())){
-			showSelectPanel(true);
+			if (PlaceholderManageWidget.VIA_STORE.equals(data.get("via"))) {
+				insertVia = PlaceholderManageWidget.VIA_STORE;
+				loadStoreIframe();
+			}
+			else {
+				insertVia = null;
+			}
+			if (data.get("via") != null && Content.class.equals(data.get("via").getClass())) {
+				super.show();
+				nameTextBox.setFocus(true);
+				center();
+				showSelectPanel(true, (Content) data.get("via"));				
+			}
 		}
 		else {
-			showSelectPanel(false);
-						
+			super.show();
+			center();
+			showSelectPanel(false, null);						
 			itemManageWidget.show(playlistItem);
-		}
-		
-		nameTextBox.setFocus(true);
-		center();
+		}	
+	}
+	
+	public void loadStoreIframe() {
+		StoreFrameWidget.getInstance().show(new Command() {
+
+			@Override
+			public void execute() {
+				contentSelected();
+			}
+			
+		}, new Command() {
+			public void execute() {
+				doActionCancel();
+			}
+		});
 	}
 	
 	public void hide() {
