@@ -337,7 +337,8 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 			setAction(row, col++, item.getName(), ACTION_SELECT, rowId);
 		}
 		if (item.getSubscriptionStatus() != null && !item.getSubscriptionStatus().isEmpty())
-			setAction(row, col++, item.getSubscriptionStatus(), ACTION_VEIWSTATUS, rowId); // status is loaded async from Store API 
+			setText(row, col++, item.getSubscriptionStatus()); // status is loaded async from Store API
+			//setAction(row, col++, item.getSubscriptionStatus(), ACTION_VEIWSTATUS, rowId); // status is loaded async from Store API 
 		else 
 			setHtml(row, col++, "&nbsp;"); //bottom border is not rendered if <TD> is empty
 		setWidget(row, col++, new Label(RiseUtils.capitalizeFirstLetter(item.getType())));
