@@ -450,9 +450,10 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		
 		//update product code of each playlist item
 		for (int i = 0; i < playlistItems.size(); i++)
-			for (int j = 0; j < gadgets.size(); j++)
-				if (playlistItems.get(i).getObjectRef().equals(gadgets.get(j).getId()))
-					playlistItems.get(i).setProductCode(gadgets.get(j).getProductCode());
+			if (playlistItems.get(i).getObjectRef() != null)
+				for (int j = 0; j < gadgets.size(); j++)
+					if (playlistItems.get(i).getObjectRef().equals(gadgets.get(j).getId()))
+						playlistItems.get(i).setProductCode(gadgets.get(j).getProductCode());
 		
 		//prepare list of product codes to request subscription status
 		HashSet<String> ids = new HashSet<>();
