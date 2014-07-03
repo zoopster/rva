@@ -1659,6 +1659,19 @@ a.tooltip:link, a.tooltip:visited, a.tooltip:hover, a.tooltip:active {
     color: #333;
 }
 
+.rdn-text-danger {
+	color:red;
+}
+.rdn-text-warninig {
+	color:#8a6d3b
+}
+.rdn-text-success {
+	color:green;
+}
+.rdn-text-normal {
+	color:black;
+}
+
 /* Mail Icon */
 a.mail-icon {
     height: 12px;
