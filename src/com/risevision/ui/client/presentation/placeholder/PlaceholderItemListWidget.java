@@ -337,7 +337,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 			setAction(row, col++, item.getName(), ACTION_SELECT, rowId);
 		}
 		if (item.getSubscriptionStatus() != null && !item.getSubscriptionStatus().isEmpty())
-			setText(row, col++, item.getSubscriptionStatus()); // status is loaded async from Store API
+			setStatus(row, col++, item.getSubscriptionStatus()); // status is loaded async from Store API
 			//setAction(row, col++, item.getSubscriptionStatus(), ACTION_VEIWSTATUS, rowId); // status is loaded async from Store API 
 		else 
 			setHtml(row, col++, "&nbsp;"); //bottom border is not rendered if <TD> is empty
@@ -354,6 +354,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		
 		setWidget(0, col++, new Label("(Playlist is empty.)"));
 	
+		setWidget(0, col++, new SpacerWidget());
 		setWidget(0, col++, new SpacerWidget());
 		setWidget(0, col++, new SpacerWidget());
 		setWidget(0, col++, new SpacerWidget());
@@ -390,6 +391,27 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		itemFlexTable.setText(row, column, text);
 	}
 
+	private void setStatus(int row, int column, String status) {
+		setText(row, column, status);
+		
+		switch (status) {
+			case "Subscribed":
+			case "On Trial":
+				setStyle(row, column, "rdn-text-success");
+				break;
+	
+			case "Cancelled":
+			case "Suspended":
+			case "Trial Expired":
+				setStyle(row, column, "rdn-text-danger");
+				break;
+	
+			default:
+				break;
+		}
+		
+	}
+
 	private void setHtml(int row, int column, String text) {
 		formatCell(row, column);
 		itemFlexTable.setHTML(row, column, text);
@@ -423,7 +445,12 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 			cellFormatter.setWidth(row, column, def);
 		}
 	}
-	
+
+	private void setStyle(int row, int column, String style){
+		CellFormatter cellFormatter = itemFlexTable.getCellFormatter();
+		cellFormatter.setStyleName(row, column, style);
+	}
+
 	private void fixScheduleItemsId() {
 		for (int i = 0; i < playlistItems.size(); i++)
 			playlistItems.get(i).setId(Integer.toString(i));
@@ -485,7 +512,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 				String status = obj.get("status");
 				//String expiry = obj.get("expiry"); //can be used for caching
 				if (pc != null && status != null) {
-					for (int j = 0; i < instance.playlistItems.size(); j++) {
+					for (int j = 0; j < instance.playlistItems.size(); j++) {
 						PlaylistItemInfo pli = instance.playlistItems.get(j);
 						if (pc.equals(pli.getProductCode())) {
 							pli.setSubscriptionStatus(status);
