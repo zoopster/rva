@@ -109,10 +109,9 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 		this.onCancel = onCancel;
 		
 		String url = ConfigurationController.getInstance().getConfiguration().getStoreURL();
-		url += "/#?inRVA";
-		url += "&up_id=" + "if_divEditor";
+		url += "?up_id=" + "if_divEditor";
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
-		url = url.replace("'", "\\'");
+		url += "#/?inRVA";
 
 		this.getElement().getStyle().clearBackgroundColor();
 		
