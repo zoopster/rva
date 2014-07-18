@@ -68,7 +68,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 	private int currentCommand;
 	private String currentKey;
 	
-	String[] header = new String[] {"20px", "100%", "60px", "80px", "20px", "20px", "35px", "50px"};
+	String[] header = new String[] {"20px", "100%", "80px", "80px", "20px", "20px", "35px", "50px"};
 
 	/*
 	 * Be careful with saving UI components in datastructures like this: if you
@@ -269,11 +269,19 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 				if (currentCommand == ACTION_VEIWSTATUS) {
 					rowIndex = RiseUtils.strToInt(currentKey, 0);
 					item = playlistItems.get(rowIndex);
-					PlaylistItemManageWidget.getInstance().show(item, rowIndex, false, new HashMap<String, Object>());
+					showInStoreStatusAndHandleAddContent(rowIndex, item.getProductCode());						
 				}
 
 			}
 		}
+	}
+
+	private void showInStoreStatusAndHandleAddContent(int row, String productCode) {
+		final HashMap<String, Object> data = new HashMap<String, Object>();
+		String storePath = "#/product-status/" + productCode + "/company/" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+		data.put("via", PlaceholderManageWidget.VIA_STORE);
+		data.put("storePath", storePath);
+		PlaceholderManageWidget.getInstance().addItem(PlaylistItemInfo.TYPE_GADGET, row, data);
 	}
 	
 	private void clearList() {
@@ -337,8 +345,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 			setAction(row, col++, item.getName(), ACTION_SELECT, rowId);
 		}
 		if (item.getSubscriptionStatus() != null && !item.getSubscriptionStatus().isEmpty())
-			setStatus(row, col++, item.getSubscriptionStatus()); // status is loaded async from Store API
-			//setAction(row, col++, item.getSubscriptionStatus(), ACTION_VEIWSTATUS, rowId); // status is loaded async from Store API 
+			setStatus(row, col++, item.getSubscriptionStatus(), rowId); // status is loaded async from Store API
 		else 
 			setHtml(row, col++, "&nbsp;"); //bottom border is not rendered if <TD> is empty
 		setWidget(row, col++, new Label(RiseUtils.capitalizeFirstLetter(item.getType())));
@@ -391,22 +398,21 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		itemFlexTable.setText(row, column, text);
 	}
 
-	private void setStatus(int row, int column, String status) {
-		setText(row, column, status);
-		
+	private void setStatus(int row, int column, String status, String rowId) {
 		switch (status) {
 			case "Subscribed":
 			case "On Trial":
-				setStyle(row, column, "rdn-text-success");
+				setAction(row, column, status, ACTION_VEIWSTATUS, rowId, "rdn-text-success");
 				break;
 	
 			case "Cancelled":
 			case "Suspended":
 			case "Trial Expired":
-				setStyle(row, column, "rdn-text-danger");
+				setAction(row, column, status, ACTION_VEIWSTATUS, rowId, "rdn-text-danger");
 				break;
 	
 			default:
+				setText(row, column, status);
 				break;
 		}
 		
@@ -430,13 +436,19 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 	}
 
 	private void setAction(int row, int column, String text, int actionType, String id) {
+		setAction(row, column, text, actionType, id, null);
+	}
+
+	private void setAction(int row, int column, String text, int actionType, String id, String styleName) {
 		formatCell(row, column);
 		Anchor actionHyperlink = new Anchor(text);
 		actionHyperlink.addClickHandler(this);
+		if (styleName != null)
+			actionHyperlink.addStyleName(styleName);
 		itemFlexTable.setWidget(row, column, actionHyperlink);
 		actionMap.put(actionHyperlink, actionType + id);
 	}
-	
+
 	private void formatCell(int row, int column){
 		CellFormatter cellFormatter = itemFlexTable.getCellFormatter();
 		
@@ -444,11 +456,6 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 		if (def != null && !def.isEmpty()) {
 			cellFormatter.setWidth(row, column, def);
 		}
-	}
-
-	private void setStyle(int row, int column, String style){
-		CellFormatter cellFormatter = itemFlexTable.getCellFormatter();
-		cellFormatter.setStyleName(row, column, style);
 	}
 
 	private void fixScheduleItemsId() {

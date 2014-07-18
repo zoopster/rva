@@ -6,7 +6,6 @@ package com.risevision.ui.client.common.widgets.store;
 
 import java.util.List;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -104,14 +103,15 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 		
 	}
 
-	public void show(Command onSave, Command onCancel){
+	public void show(String storePath, Command onSave, Command onCancel){
 		this.onSave = onSave;
 		this.onCancel = onCancel;
 		
 		String url = ConfigurationController.getInstance().getConfiguration().getStoreURL();
 		url += "?up_id=" + "if_divEditor";
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
-		url += "#/?inRVA";
+		url += storePath;
+		url += "?inRVA";
 
 		this.getElement().getStyle().clearBackgroundColor();
 		

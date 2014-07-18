@@ -252,7 +252,7 @@ public class PlaylistItemManageWidget extends PopupPanel {
 						playlistItem.getObjectData().isEmpty())){
 			if (PlaceholderManageWidget.VIA_STORE.equals(data.get("via"))) {
 				insertVia = PlaceholderManageWidget.VIA_STORE;
-				loadStoreIframe();
+				loadStoreIframe((String) data.get("storePath"));
 			}
 			else {
 				insertVia = null;
@@ -272,8 +272,9 @@ public class PlaylistItemManageWidget extends PopupPanel {
 		}	
 	}
 		
-	public void loadStoreIframe() {
-		StoreFrameWidget.getInstance().show(new Command() {
+	public void loadStoreIframe(String storePath) {
+		StoreFrameWidget.getInstance().show(storePath,
+		new Command() {
 
 			@Override
 			public void execute() {

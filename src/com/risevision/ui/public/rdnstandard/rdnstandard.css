@@ -1659,17 +1659,16 @@ a.tooltip:link, a.tooltip:visited, a.tooltip:hover, a.tooltip:active {
     color: #333;
 }
 
-.rdn-text-danger {
+.rdn-text-danger, a.rdn-text-danger:link, a.rdn-text-danger:visited {
 	color:red;
 }
-.rdn-text-warninig {
+.rdn-text-warninig, a.rdn-text-warninig:link, a.rdn-text-warninig:visited  {
 	color:#8a6d3b
 }
-.rdn-text-success {
+.rdn-text-success, a.rdn-text-success:link, a.rdn-text-success:visited  {
 	color:green;
 }
-.rdn-text-normal {
-	color:black;
+.rdn-text-normal, a.rdn-text-normal:link, a.rdn-text-normal:visited  {
 }
 
 /* Mail Icon */
