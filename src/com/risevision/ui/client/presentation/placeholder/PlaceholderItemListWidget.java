@@ -278,7 +278,7 @@ public class PlaceholderItemListWidget extends VerticalPanel implements ClickHan
 
 	private void showInStoreStatusAndHandleAddContent(int row, String productCode) {
 		final HashMap<String, Object> data = new HashMap<String, Object>();
-		String storePath = "#/product-status/" + productCode + "/company/" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+		String storePath = "#/product-status/" + productCode;
 		data.put("via", PlaceholderManageWidget.VIA_STORE);
 		data.put("storePath", storePath);
 		PlaceholderManageWidget.getInstance().addItem(PlaylistItemInfo.TYPE_GADGET, row, data);

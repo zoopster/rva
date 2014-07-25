@@ -111,7 +111,7 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 		url += "?up_id=" + "if_divEditor";
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
 		url += storePath;
-		url += "?inRVA";
+		url += "?inRVA&cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
 
 		this.getElement().getStyle().clearBackgroundColor();
 		
