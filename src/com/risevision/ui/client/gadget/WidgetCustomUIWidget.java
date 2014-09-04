@@ -9,6 +9,7 @@ import java.util.List;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.info.WidgetSettingsInfo;
 import com.risevision.ui.client.common.widgets.iframe.CommandType;
 import com.risevision.ui.client.common.widgets.iframe.RpcDialogBoxWidget;
@@ -148,6 +149,7 @@ public class WidgetCustomUIWidget extends RpcDialogBoxWidget {
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
 		url += "&up_rsW=" + PresentationLayoutWidget.getInstance().getPlaceholderWidth();
 		url += "&up_rsH=" + PresentationLayoutWidget.getInstance().getPlaceholderHeight();
+		url += "&up_companyId" + SelectedCompanyController.getInstance().getSelectedCompanyId();
 		
 		url = url.replace("'", "\\'");
 
