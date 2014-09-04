@@ -149,7 +149,7 @@ public class WidgetCustomUIWidget extends RpcDialogBoxWidget {
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
 		url += "&up_rsW=" + PresentationLayoutWidget.getInstance().getPlaceholderWidth();
 		url += "&up_rsH=" + PresentationLayoutWidget.getInstance().getPlaceholderHeight();
-		url += "&up_companyId" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+		url += "&up_companyId=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
 		
 		url = url.replace("'", "\\'");
 

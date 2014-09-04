@@ -17,6 +17,7 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+war/WEB-INF/appengine-generated/
 
 #compilation logs
 .gwt/
@@ -29,3 +30,10 @@ www-test/
 
 #old GWT (1.5) created this dir
 .gwt-tmp/
+
+war/WEB-INF/lib/appengine-*.jar
+war/WEB-INF/lib/datanucleus-*.jar
+war/WEB-INF/lib/geronimo-*.jar
+war/WEB-INF/lib/gwt-servlet.jar
+war/WEB-INF/lib/jdo2-api-*.jar
+war/WEB-INF/lib/jsr*.jar
