@@ -217,6 +217,14 @@
 <!-- 		</auth-constraint> -->
 <!-- 	</security-constraint> -->
 
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/google335065593fa19aed.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+		</auth-constraint>
+	</security-constraint>
+
 <!-- 	<security-constraint> -->
 <!-- 		<web-resource-collection> -->
 <!-- 			<url-pattern>/logout/</url-pattern> -->
