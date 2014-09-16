@@ -66,7 +66,7 @@ public class PersistentConfigurationInfo implements Serializable {
     public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2-test.appspot.com";
 //    public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2.appspot.com";
 
-    private static final String STORE_URL = "http://store.risevision.com/~rvi/store/";
+    private static final String STORE_URL = "http://192.254.220.35/store/";
 	
 	@Persistent
 	@PrimaryKey
