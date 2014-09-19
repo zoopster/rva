@@ -18,27 +18,28 @@ import com.risevision.ui.server.utils.ServerUtils;
 public class PersistentConfigurationInfo implements Serializable {
 
 //	private static final String SERVER_URL = "https://rvacore-test.appspot.com";
-	private static final String SERVER_URL = "https://rvacore-test2.appspot.com";
-//	private static final String SERVER_URL = "https://rvaserver2.appspot.com";
+//	private static final String SERVER_URL = "https://rvacore-test2.appspot.com/";
+	private static final String SERVER_URL = "https://rvaserver2.appspot.com";
 	
-	private static final String STORE_API_URL = "https://store-dot-rvacore-test2.appspot.com";
+	private static final String STORE_API_URL = "https://store-dot-rvaserver2.appspot.com";
 	
 	private static final String REQUEST_TOKEN_URL = SERVER_URL + "/_ah/OAuthGetRequestToken";
 	private static final String AUTHORIZE_TOKEN_URL = SERVER_URL + "/_ah/OAuthAuthorizeToken";
 	private static final String ACCESS_TOKEN_URL = SERVER_URL + "/_ah/OAuthGetAccessToken";
 
 	// URL of the Viewer (used for Preview functionality)
-	private static final String VIEWER_URL = "http://viewer-test.appspot.com/";     // old non HRD
+//	private static final String VIEWER_URL = "http://viewer-test.appspot.com/";     // old non HRD
 //	private static final String VIEWER_URL = "http://rvaviewer-test.appspot.com/";  //new HRD for viewer-test.appspot.com
 //	private static final String VIEWER_URL = "http://rvashow.appspot.com/";    //old non HRD app engine app
 //	private static final String VIEWER_URL = "http://rvashow2.appspot.com/";   //HRD app engine app
-//	private static final String VIEWER_URL = "http://preview.risevision.com/"; //production
+	private static final String VIEWER_URL = "http://preview.risevision.com/"; //production
 	
-	private static final String MEDIA_LIBRARY_URL = "http://storage.rvacore-test.appspot.com";
+//	private static final String MEDIA_LIBRARY_URL = "http://storage.rvacore-test.appspot.com";
+	private static final String MEDIA_LIBRARY_URL = "http://storage.risevision.com";
 	
 	// ID of Rise Vision Inc - Top tier PNO
-	private static final String RISE_ID = "b428b4e8-c8b9-41d5-8a10-b4193c789443"; // Dev
-//	private static final String RISE_ID = "f114ad26-949d-44b4-87e9-8528afc76ce4"; // Production
+//	private static final String RISE_ID = "b428b4e8-c8b9-41d5-8a10-b4193c789443"; // Dev
+	private static final String RISE_ID = "f114ad26-949d-44b4-87e9-8528afc76ce4"; // Production
 
 	// Link to the Rise Installer
 	private static final String WINDOWS_INSTALLER_URL = SERVER_URL + "/player/download?os=win";
@@ -63,11 +64,11 @@ public class PersistentConfigurationInfo implements Serializable {
     
     public static final String GCS_ACCOUNT_EMAIL = "";
     
-    public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2-test.appspot.com";
-//    public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2.appspot.com";
+//    public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2-test.appspot.com";
+    public static final String FINANCIAL_SERVER_URL = "http://contentfinancial2.appspot.com";
 
-    private static final String STORE_URL = "http://192.254.220.35/store-ci/"; // Dev
-//    private static final String STORE_URL = "https://store.risevision.com/"; // Production
+//    private static final String STORE_URL = "http://192.254.220.35/store-ci/"; // Dev
+    private static final String STORE_URL = "https://store.risevision.com/"; // Production
 	
 	@Persistent
 	@PrimaryKey
