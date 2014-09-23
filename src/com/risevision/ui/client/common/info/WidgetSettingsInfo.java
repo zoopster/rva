@@ -127,16 +127,14 @@ public class WidgetSettingsInfo {
 	private String getWidgetHtmlUrl(String url) {
 		String res = "";
 		int queryParamsStartPos = url.indexOf("?");
-//		if (queryParamsStartPos == -1) {
-//			queryParamsStartPos = url.indexOf("&");
-//		}
-		
+
 		if (queryParamsStartPos > 0) {
 			res = url.substring(0, queryParamsStartPos);
 		}
-		else if (!url.contains("&")) {
+		else if (queryParamsStartPos == -1 && !url.contains("&")) {
 			res = url;
 		}
+		// if queryParamsStartPos is 0, return blank url
 		
 		return res;
 	}
