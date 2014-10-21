@@ -37,7 +37,7 @@ public class TutorialWidget extends PopupPanel {
 	private HTML closePanel = new HTML("<span style='cursor:pointer;font-size:26px;'>&times;</span>");
 //	private Image startVideoImage = new Image("images/help-video.jpg");
 //	private String videoUrl = "http://www.youtube.com/embed/1QJygspi8MA?autoplay=0";
-	private String videoUrl = "http://www.youtube.com/embed/fgPqkDfcLx4?autoplay=0";
+	private String videoUrl = "http://www.youtube.com/embed/fgPqkDfcLx4?rel=0&controls=0&showinfo=0";
 	
 	private CheckBox tutorialCheckbox = new CheckBox();
 	private HorizontalPanel emailUpdatesPanel = new HorizontalPanel();
