@@ -76,6 +76,11 @@ public class MenuWidget extends FlowPanel {
 			addAction("Users", ContentId.USERS);
 		}
 		menuItemNetwork = addAction("Network", ContentId.MANAGE_PORTAL);
+		//add Store link
+		//can't use ConfigurationController.getInstance().getConfiguration().getStoreURL() at this point - configuration is not populated yet
+		String STORE_URL = "https://store.risevision.com/";
+		addDivider();
+		addAnchor("Store", STORE_URL); 
 	}
 	
 	private Anchor addAction(String text, String contentId) {
@@ -108,7 +113,19 @@ public class MenuWidget extends FlowPanel {
 		
 		return newLink;
 	}
-	
+
+	private Anchor addAnchor(String text, String url) {
+		Anchor newLink = new Anchor(text);
+		newLink.setTabIndex(-1);
+		newLink.setHref(url);
+		newLink.setTarget("_blank");
+		add(newLink);
+
+		add(new SpacerWidget());
+		
+		return newLink;
+	}
+
 	private void addDivider() {
 		add(new InlineLabel("|"));
 		add(new SpacerWidget());
