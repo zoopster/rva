@@ -28,7 +28,7 @@ public class UserInfo implements Serializable {
 
 	private String telephone;
 	private String email;	
-	private boolean mailSyncEnabled = true;
+	private boolean mailSyncEnabled = false;
 	
 	private Date lastLogin;	
 	private boolean termsAccepted;
