@@ -36,7 +36,7 @@ public class PresentationDataController extends DataControllerBase {
 		headerEntries.add(new HeaderEntry("companyId"));
 		headerEntries.add(new HeaderEntry(PresentationAttribute.NAME));
 //		headerEntries.add(new HeaderEntry(PresentationAttribute.LAYOUT));
-		headerEntries.add(new HeaderEntry(PresentationAttribute.PUBLISH));
+//		headerEntries.add(new HeaderEntry(PresentationAttribute.PUBLISH));
 		headerEntries.add(new HeaderEntry(PresentationAttribute.TEMPLATE));
 		headerEntries.add(new HeaderEntry(PresentationAttribute.REVISION_STATUS));
 		headerEntries.add(new HeaderEntry(PresentationAttribute.DISTRIBUTION));
@@ -130,7 +130,7 @@ public class PresentationDataController extends DataControllerBase {
 			presentation.setCompanyId(column.get(headerEntries.get(j++).col).get("v"));
 			presentation.setName(column.get(headerEntries.get(j++).col).get("v"));
 //			presentation.setLayout(column.get(headerEntries.get(j++).col).get("v"));
-			presentation.setPublishType(column.get(headerEntries.get(j++).col).getInt("v"));
+//			presentation.setPublishType(column.get(headerEntries.get(j++).col).getInt("v"));
 			presentation.setTemplate(column.get(headerEntries.get(j++).col).getBoolean("v"));
 			presentation.setRevisionStatus(column.get(headerEntries.get(j++).col).getInt("v"));
 			presentation.setDistributionString(column.get(headerEntries.get(j++).col).get("v"));
