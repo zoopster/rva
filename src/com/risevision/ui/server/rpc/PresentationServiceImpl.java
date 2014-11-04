@@ -115,7 +115,7 @@ public class PresentationServiceImpl extends RiseRemoteServiceServlet implements
 		
         form.add(PresentationAttribute.LAYOUT, StringEscapeUtils.escapeXml(presentation.getLayout()));
         form.add(PresentationAttribute.EMBEDDED_IDS, RiseUtils.listToString(presentation.getEmbeddedIds(), ","));
-        form.add(PresentationAttribute.PUBLISH, Integer.toString(presentation.getPublishType())); 
+//        form.add(PresentationAttribute.PUBLISH, Integer.toString(presentation.getPublishType())); 
         form.add(PresentationAttribute.TEMPLATE, presentation.isTemplate() ? Global.TRUE: Global.FALSE);
         form.add(PresentationAttribute.DISTRIBUTION, presentation.getDistributionString());
 
@@ -296,7 +296,7 @@ public class PresentationServiceImpl extends RiseRemoteServiceServlet implements
 		        		
 //				presentation.setLayout(ServerUtils.getNode(fstElmnt, PresentationAttribute.LAYOUT));
 				presentation.setLayout(StringEscapeUtils.unescapeXml(ServerUtils.getNode(fstElmnt, PresentationAttribute.LAYOUT)));
-				presentation.setPublishType(ServerUtils.strToInt(ServerUtils.getNode(fstElmnt, PresentationAttribute.PUBLISH), 0));
+//				presentation.setPublishType(ServerUtils.strToInt(ServerUtils.getNode(fstElmnt, PresentationAttribute.PUBLISH), 0));
 				presentation.setTemplate(ServerUtils.getNode(fstElmnt, PresentationAttribute.TEMPLATE).equals(Global.TRUE));
 				presentation.setRevisionStatus(ServerUtils.strToInt(ServerUtils.getNode(fstElmnt, PresentationAttribute.REVISION_STATUS), 0));
 				presentation.setDistributionString(ServerUtils.getNode(fstElmnt, PresentationAttribute.DISTRIBUTION));

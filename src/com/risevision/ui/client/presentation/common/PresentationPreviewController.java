@@ -13,6 +13,7 @@ import com.risevision.core.api.attributes.PresentationAttribute;
 import com.risevision.ui.client.common.controller.ConfigurationController;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 
+@Deprecated
 public class PresentationPreviewController {
 	private static PresentationPreviewController instance;
 	private JavaScriptObject presentationObject;
@@ -99,7 +100,7 @@ public class PresentationPreviewController {
 		jsPresentation.set(PresentationAttribute.ID, presentation.getId());
 		jsPresentation.set(PresentationAttribute.NAME, presentation.getName());
 		jsPresentation.set("companyId", SelectedCompanyController.getInstance().getSelectedCompanyId());
-		jsPresentation.set(PresentationAttribute.PUBLISH, presentation.getPublishType());
+//		jsPresentation.set(PresentationAttribute.PUBLISH, presentation.getPublishType());
 		jsPresentation.set(PresentationAttribute.TEMPLATE, presentation.isTemplate());
 		
 		jsPresentation.set(PresentationAttribute.LAYOUT, presentation.getLayout());
