@@ -422,14 +422,20 @@ public class UiControlBinder extends Composite implements ClickHandler {
 	private void showTutorialSlider() {
 		if (!getValue(currentSettings, ManageSettingsInfo.TUTORIAL_URL).isEmpty()) {
 			TutorialWidget.getInstance().setVideoUrl(getValue(currentSettings, ManageSettingsInfo.TUTORIAL_URL));
+			
+			showTutorialWidget();
 		}
 		else if (!getValue(parentSettings, ManageSettingsInfo.TUTORIAL_URL).isEmpty()) {
 			TutorialWidget.getInstance().setVideoUrl(getValue(parentSettings, ManageSettingsInfo.TUTORIAL_URL));
+			
+			showTutorialWidget();
 		}
 		else {
 			tutorialLink.setVisible(false);
 		}
-		
+	}
+	
+	private void showTutorialWidget() {
 		if (UserAccountController.getInstance().getUserInfo() != null 
 				&& UserAccountController.getInstance().getUserInfo().isShowTutorial()) {
 //			if (!currentSettings.containsKey(ManageSettingsInfo.SHOW_TUTORIAL) 
