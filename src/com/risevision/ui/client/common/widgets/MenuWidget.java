@@ -8,15 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.dom.client.Style.FontWeight;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.risevision.ui.client.common.ContentId;
+import com.risevision.ui.client.common.controller.ConfigurationController;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.controller.UserAccountController;
-import com.risevision.ui.client.common.widgets.mediaLibrary.StorageFrameWidget;
 
 public class MenuWidget extends FlowPanel {
 	private static MenuWidget instance;	
@@ -48,6 +46,13 @@ public class MenuWidget extends FlowPanel {
 		boolean canViewDisplay = UserAccountController.getInstance().userHasRoleDisplayAdministrator();
 		boolean canViewUser = UserAccountController.getInstance().userHasRoleUserAdministrator();
 		
+		String STORE_URL = "", STORAGE_URL = "";
+		if (ConfigurationController.getInstance().getConfiguration() != null) {
+			STORE_URL = ConfigurationController.getInstance().getConfiguration().getStoreURL();
+//			STORE_URL = "https://store.risevision.com/";
+			STORAGE_URL = ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL();
+//			STORAGE_URL = "http://storage.risevision.com";
+		}
 		clear();
 		linkMap.clear();
 
@@ -62,7 +67,7 @@ public class MenuWidget extends FlowPanel {
 			addAction("Gadgets", ContentId.GADGETS);
 		}
 		if (canEditContent || canPublishContent) {
-			addStorageLink("Storage");
+			addAnchor("Storage", STORAGE_URL);
 		}
 		if (canViewDisplay)
 			addAction("Displays", ContentId.DISPLAYS);
@@ -77,8 +82,6 @@ public class MenuWidget extends FlowPanel {
 		}
 		menuItemNetwork = addAction("Network", ContentId.MANAGE_PORTAL);
 		//add Store link
-		//can't use ConfigurationController.getInstance().getConfiguration().getStoreURL() at this point - configuration is not populated yet
-		String STORE_URL = "https://store.risevision.com/";
 		addDivider();
 		addAnchor("Store", STORE_URL); 
 	}
@@ -95,24 +98,20 @@ public class MenuWidget extends FlowPanel {
 		return newLink;
 	}
 	
-	private Anchor addStorageLink(String text) {
-		Anchor newLink = new Anchor(text);
-		newLink.setTabIndex(-1);
-		newLink.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				StorageFrameWidget.getInstance().show(null);
-			}
-		});
-//		newLink.setHref(ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL() + "#/files/" + SelectedCompanyController.getInstance().getSelectedCompanyId());
-//		newLink.setTarget("_blank");
-		add(newLink);
-
-		add(new SpacerWidget());
-		
-		return newLink;
-	}
+//	private Anchor addStorageLink(String text) {
+//		Anchor newLink = new Anchor(text);
+//		newLink.setTabIndex(-1);
+//		newLink.addClickHandler(new ClickHandler() {
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				StorageFrameWidget.getInstance().show(null);
+//			}
+//		});
+//		add(newLink);
+//		add(new SpacerWidget());
+//		
+//		return newLink;
+//	}
 
 	private Anchor addAnchor(String text, String url) {
 		Anchor newLink = new Anchor(text);
