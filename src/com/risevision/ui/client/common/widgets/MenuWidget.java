@@ -46,12 +46,14 @@ public class MenuWidget extends FlowPanel {
 		boolean canViewDisplay = UserAccountController.getInstance().userHasRoleDisplayAdministrator();
 		boolean canViewUser = UserAccountController.getInstance().userHasRoleUserAdministrator();
 		
-		String STORE_URL = "", STORAGE_URL = "";
+		String storeUrl = "", storageUrl = "";
 		if (ConfigurationController.getInstance().getConfiguration() != null) {
-			STORE_URL = ConfigurationController.getInstance().getConfiguration().getStoreURL();
-//			STORE_URL = "https://store.risevision.com/";
-			STORAGE_URL = ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL();
-//			STORAGE_URL = "http://storage.risevision.com";
+			String urlParam = "#/?cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+
+			storeUrl = ConfigurationController.getInstance().getConfiguration().getStoreURL() + urlParam;
+//			storeUrl = "https://store.risevision.com/";
+			storageUrl = ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL() + urlParam;
+//			storageUrl = "https://storage.risevision.com/";
 		}
 		clear();
 		linkMap.clear();
@@ -67,7 +69,7 @@ public class MenuWidget extends FlowPanel {
 			addAction("Gadgets", ContentId.GADGETS);
 		}
 		if (canEditContent || canPublishContent) {
-			addAnchor("Storage", STORAGE_URL);
+			addAnchor("Storage", storageUrl);
 		}
 		if (canViewDisplay)
 			addAction("Displays", ContentId.DISPLAYS);
@@ -83,7 +85,7 @@ public class MenuWidget extends FlowPanel {
 		menuItemNetwork = addAction("Network", ContentId.MANAGE_PORTAL);
 		//add Store link
 		addDivider();
-		addAnchor("Store", STORE_URL); 
+		addAnchor("Store", storeUrl); 
 	}
 	
 	private Anchor addAction(String text, String contentId) {
@@ -98,21 +100,6 @@ public class MenuWidget extends FlowPanel {
 		return newLink;
 	}
 	
-//	private Anchor addStorageLink(String text) {
-//		Anchor newLink = new Anchor(text);
-//		newLink.setTabIndex(-1);
-//		newLink.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				StorageFrameWidget.getInstance().show(null);
-//			}
-//		});
-//		add(newLink);
-//		add(new SpacerWidget());
-//		
-//		return newLink;
-//	}
-
 	private Anchor addAnchor(String text, String url) {
 		Anchor newLink = new Anchor(text);
 		newLink.setTabIndex(-1);
