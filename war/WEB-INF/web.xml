@@ -87,16 +87,6 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>MediaLibraryServlet</servlet-name>
-		<servlet-class>com.risevision.ui.server.rpc.MediaLibraryServiceImpl</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>MediaLibraryServlet</servlet-name>
-		<url-pattern>/rdn2ui/mediaLibrary</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
 		<servlet-name>LoginHelperServlet</servlet-name>
 		<servlet-class>com.risevision.ui.server.rpc.LoginServiceImpl</servlet-class>
 	</servlet>
@@ -149,15 +139,6 @@
 	<servlet-mapping>
 		<servlet-name>TwitterAccessTokenServlet</servlet-name>
 		<url-pattern>/twitter/access</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>AmzUploadCompleteServlet</servlet-name>
-		<servlet-class>com.risevision.ui.server.amazonImpl.UploadCompleteServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AmzUploadCompleteServlet</servlet-name>
-		<url-pattern>/mediaLibrary/uploadComplete</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
