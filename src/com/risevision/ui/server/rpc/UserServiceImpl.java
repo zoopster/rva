@@ -218,8 +218,9 @@ public class UserServiceImpl extends RiseRemoteServiceServlet implements
 
     public RpcResultInfo putUser(String companyId, UserInfo user) throws ServiceFailedException {
 		// new user- generate userId
-		if (user.getId() == null || user.getId().isEmpty())
-			user.setId(UUID.randomUUID().toString());
+		if (user.getId() == null || user.getId().isEmpty()) {
+			user.setId(RiseUtils.strIsNullOrEmpty(user.getUserName()) ? UUID.randomUUID().toString() : user.getUserName());
+    	}
 
 		String url = createCompanyUserResource(user.getId(), companyId);
 
