@@ -103,7 +103,6 @@ public class CompanyServiceImpl extends RiseRemoteServiceServlet implements Comp
 		form.add(CompanyAttribute.NETWORK_OPERATOR_STATUS, Integer.toString(company.getPnoStatus()));
 		form.add(CompanyAttribute.COMPANY_STATUS, Integer.toString(company.getCustomerStatus()));
 		form.add(CompanyAttribute.NOTIFICATION_EMAILS, RiseUtils.listToString(company.getDisplayMonitorEmailRecipients(), ","));
-		form.add(CompanyAttribute.ENABLED_FEATURES, company.getEnabledFeaturesJson());
 		
 //		form.add(CompanyAttribute.APP_IDS, "rdntwo");
 		
@@ -490,9 +489,7 @@ public class CompanyServiceImpl extends RiseRemoteServiceServlet implements Comp
 				company.setCustomerStatusChangeDate(ServerUtils.strToDate(ServerUtils.getNode(fstElmnt, CompanyAttribute.COMPANY_STATUS_CHANGE_DATE), null));
 				
 				company.setDisplayMonitorEmailRecipients(ServerUtils.getNodeListElements(fstElmnt.getElementsByTagName(CompanyAttribute.NOTIFICATION_EMAIL)));
-				
-				company.setEnabledFeaturesJson(ServerUtils.getNode(fstElmnt, CompanyAttribute.ENABLED_FEATURES));
-				
+								
 				String settingsString = ServerUtils.getNode(fstElmnt, CompanyAttribute.SETTINGS);
 				company.setSettings(parsePnoSettings(settingsString));
 				
