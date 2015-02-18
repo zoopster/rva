@@ -8,7 +8,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.risevision.ui.client.common.info.CompanyInfo;
-import com.risevision.ui.client.common.info.EnabledFeaturesInfo;
 import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
 
@@ -37,25 +36,6 @@ public class SelectedCompanyController {
 	}
 	public CompanyInfo getUserCompany() {
 		return userCompany;
-	}
-	
-	public boolean isSelectedCompanyFeature(String featureName) {
-		EnabledFeaturesInfo features = new EnabledFeaturesInfo(selectedCompany.getEnabledFeaturesJson());
-		
-		return (features.isFeatureEnabled(featureName));
-	}
-	
-	public void saveSelectedCompanyFeature(String featureName, boolean selected) {
-		EnabledFeaturesInfo features = new EnabledFeaturesInfo(selectedCompany.getEnabledFeaturesJson());
-
-		if (selected) {
-			features.addEnabledFeature(featureName);
-		} else {
-			features.removeEnabledFeature(featureName);
-		}
-		selectedCompany.setEnabledFeaturesJson(features.getEnabledFeaturesString());
-		
-		companyService.saveCompany(selectedCompany, rpcCallBackHandler);
 	}
 
 	public String getUserCompanyId() {
