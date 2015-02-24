@@ -11,13 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.risevision.ui.client.common.exception.ServiceFailedException;
-import com.risevision.ui.server.oauth.HttpOAuthHelper;
 import com.risevision.ui.server.utils.ServerUtils;
 
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
-import org.restlet.engine.Engine;
 import org.restlet.ext.xml.DomRepresentation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
@@ -50,7 +48,7 @@ public class RiseRemoteServiceServlet extends RemoteServiceServlet {
 			isDevelopmentMode = false;
 		}
 		
-		Engine.getInstance().getRegisteredAuthenticators().add(new HttpOAuthHelper());
+//		Engine.getInstance().getRegisteredAuthenticators().add(new HttpOAuthHelper());
 	}
 	
 	public Document get(String url) throws ServiceFailedException {
