@@ -1,4 +1,4 @@
-###RVA###
+###RVA - zoopster repo###
 **Copyright © 2010 - May 2014 Rise Vision Incorporated.**
 
 *Use of this software is governed by the GPLv3 license (available in the LICENSE file).*
@@ -11,7 +11,7 @@ If you have any questions or problems please don't hesitate to join our lively a
 
 If you are looking for user documentation on Rise Vision please see http://www.risevision.com/help/users/
 
-If you would like more information on developing applications for Rise Vision please visit http://www.risevision.com/help/developers/. 
+If you would like more information on developing applications for Rise Vision please visit http://www.risevision.com/help/developers/.
 
 And if you are considering contributing to this open source project, our favourite option, we have 3 good reasons why we released this code under version 3 of the GNU General Public License, and we think they are 3 good reasons for why you should get involved too:
 
@@ -21,11 +21,11 @@ And if you are considering contributing to this open source project, our favouri
 
 3. We know that some of you nervous types worry about what happens if our company gets taken out in the zombie apocalypse. We get it, and neither one of us wants to deal with that delicate question of software escrow agreements for the “just in case we kick the bucket scenario”. No worries! We made it easy. No fuss, no cost, no lawyers! We published the software here. Have at it.
 
-3 compelling reasons for why you should actively join our project. 
+3 compelling reasons for why you should actively join our project.
 
-1. Together we can make something better than either of us could on our own. 
+1. Together we can make something better than either of us could on our own.
 
-2. If you have something completely different in mind, no problem, take our code, fork it, and make what you need, but respect the open source movement, and our license, and keep it open. 
+2. If you have something completely different in mind, no problem, take our code, fork it, and make what you need, but respect the open source movement, and our license, and keep it open.
 
 3. Become a zombie crusader!
 
